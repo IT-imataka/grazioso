@@ -8,14 +8,8 @@ import CalendarView from "../components/CalendarView";
 import ReservationList from "../components/ReservationList";
 import ReservationModal from "../components/ReservationModal";
 
-// 不要になった import を削除
-// import WeeklyCalendar from "../components/WeeklyCalendar";
-// import MobileNavbar from "../components/MobileNavbar";
 
 export default function Dashboard() {
-
-  // WeeklyCalendar用の currentDate state も不要になったので削除
-  // const [currentDate, setCurrentDate] = useState(new Date());
 
   const {
     reservables,
@@ -45,24 +39,7 @@ export default function Dashboard() {
 
 
   return (
-    <div className="relative !flex h-screen w-full items-center justify-center bg-[#0B1A45] text-slate-100 font-sans p-0 lg:p-8 overflow-hidden">
-
-      {/* --- 背景の幾何学的な光の演出 --- */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute bottom-[15%] right-[20%] w-32 h-32 bg-gradient-to-t from-yellow-500 to-orange-500 rotate-[30deg] blur-2xl opacity-90" />
-        <div className="absolute top-[5%] left-[-20%] w-[50%] h-[50%] bg-cyan-600/50 rounded-full blur-[90px]" />
-        <div className="absolute bottom-[-10%] left-[5%] w-72 h-72 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full blur-[90px]" />
-        <div className="absolute top-[5%] right-[10%] w-72 h-72 bg-gradient-to-br from-orange-500 to-pink-600 rotate-45 blur-4 opacity-70 mix-blend-screen" />
-        <div className="absolute bottom-[5%] left-[20%] w-72 h-72 bg-gradient-to-br from-orange-500 to-pink-600 rotate-45 blur-[60px] opacity-70 rounded-full" />
-        <div className="absolute bottom-[15%] left-[15%] w-32 h-32 bg-gradient-to-br from-purple-500 to-white-500/90 rotate-45 blur-[5px] rounded-full" />
-        <div className="absolute top-[-5%] left-[-5%] w-96 h-96 bg-cyan-600/40 rotate-12 blur-[8px] rounded-full" />
-        <div className="absolute top-[-5%] left-[-5%] w-96 h-96 bg-cyan-600/40 rotate-12 blur-[80px] rounded-full" />
-        <div className="absolute top-[5%] right-[10%] w-72 h-72 bg-gradient-to-br from-orange-500 to-pink-600 rotate-45 blur-xs opacity-70 mix-blend-screen" />
-        <div className="absolute top-[30%] right-[5%] w-[400px] h-[400px] bg-purple-600/40 rounded-full blur-[80px]" />
-        <div className="absolute top-[5%] right-[10%] w-72 h-72 bg-purple-600/40 rounded-full blur-[80px]" />
-        <div className="absolute bottom-[5%] left-[20%]  w-72 h-72 bg-purple-600/40 rounded-full blur-[50px]" />
-        <div className="absolute bottom-[15%] right-[20%] w-32 h-32 bg-gradient-to-t from-yellow-500 to-orange-500 rotate-[30deg] blur-[40px] opacity-80" />
-      </div>
+    <div className="relative !flex h-screen w-full items-center justify-center bg-[#EAD8C3] text-slate-100 font-sans p-0 lg:p-8 overflow-hidden">
 
       {/* === 📱 スマホ用ボトムナビゲーション === */}
       {/* Sidebarコンポーネントの中にボトムナビ機能が含まれているので、
@@ -86,22 +63,14 @@ export default function Dashboard() {
 
           {/* ヘッダーエリア */}
           <div className="flex justify-between items-center mb-6 shrink-0">
-            <h1 className="text-2xl lg:text-3xl font-black tracking-wide text-white drop-shadow-md">Bboard</h1>
+            <h1 className="text-2xl lg:text-xl font-black tracking-wide text-[#2A1D17] [text-shadow:0_3px_3px_rgba(0,0,0,0.12)] drop-shadow-md">Grazioso ダッシュボード</h1>
             <div className="flex items-center gap-6">
-              <label className="flex items-center gap-3 text-sm font-bold text-slate-400 cursor-pointer hover:text-slate-200 transition-colors">
-                <div className="relative">
-                  <input type="checkbox" className="peer sr-only" />
-                  <div className="w-11 h-6 bg-slate-700/50 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                </div>
-                <span className="hidden sm:inline">Timeline View</span>
-              </label>
-
-              <button
+              {/* <button
                 onClick={() => setCreateOpen(true)}
-                className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white text-sm font-bold rounded-xl backdrop-blur-md border border-white/20 shadow-lg transition-all active:scale-95"
+                className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-[#2A1D17] text-sm font-bold rounded-xl backdrop-blur-md border border-white/20 shadow-lg transition-all active:scale-95"
               >
                 New Reservation
-              </button>
+              </button> */}
             </div>
           </div>
 

@@ -1,4 +1,3 @@
-// v0が生成したロジックを利用して見た目を構築しますが、既存の構成（default exportなど）は維持します
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useState } from 'react'
 import type { Reservation } from '../api/reservationApi';
@@ -63,7 +62,7 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
   const getWeekDays = () => {
     const week = [];
     const start = new Date(currentWeekStart);
-    // 日曜日を基準にセット　今日の日付の添字から曜日の添字を引くことで、その週初めの日付を返し続けるようにする
+    // 日曜日を基準にセット 今日の日付の添字から曜日の添字を引くことで、その週初めの日付を返し続けるようにする
     // console.log(start.getDay()); console.log(start.getDate());
     start.setDate(start.getDate() - start.getDay());
     for (let i = 0; i < TOTAL_DAYS; i++) {
@@ -129,7 +128,7 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
   return (
     // コンテナ：PCでは白カード、スマホでは背景になじむように調整するか、
     // ここでは構造を変えずにレスポンシブクラスで中身を切り替えます。
-    <div className="w-full h-full md:bg-white md:rounded-3xl md:p-8 md:shadow-2xl flex flex-col ">
+    <div className="w-full h-full md:bg-white/40 md:rounded-3xl md:p-8 md:shadow-2xl flex flex-col ">
 
       {/* ================================================================
           📱 スマホ表示 (lg:hidden) - 週間カレンダー
@@ -137,17 +136,17 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
       <div className="block md:hidden w-full mb-2">
         {/* スマホ用ヘッダー */}
         <div className="flex justify-between items-center mb-4 px-2">
-          <h2 className="text-xl font-bold text-white">
+          <h2 className="text-xl font-bold text-[#2A1D17]">
             {currentWeekStart.getFullYear()}年{currentWeekStart.getMonth() + 1}月
           </h2>
-          <div className="flex gap-4 text-slate-300">
+          <div className="flex gap-4 text-[#2A1D17]">
             <button onClick={preWeek} className="p-1 hover:text-white"><ChevronLeft size={32} /></button>
             <button onClick={nextWeek} className="p-1 hover:text-white"><ChevronRight size={32} /></button>
           </div>
         </div>
 
         {/* 週間グリッド (横並び) */}
-        <div className="flex items-center bg-white/10 rounded-2xl p-1.5 backdrop-blur-md border border-white/10 shadow-lg overflow-x-auto snap-x snap-mandatory">
+        <div className="flex items-center bg-white/10 rounded-2xl p-1.5 backdrop-blur-md border border-[#2A1D17]/5 shadow-lg overflow-x-auto snap-x snap-mandatory">
           {weekDates.map((date, i) => {
             const active = isSelected(date);
             const reserved = hasReservation(date);
@@ -155,14 +154,14 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
               <button
                 key={i}
                 onClick={() => handleDateClick(date)}
-                className={`shrink-0 snap-center flex flex-col items-center justify-center w-[calc(100%/7)] aspect-[3/5] rounded-full transition-all duration-300 relative
+                className={`shrink-0 snap-center flex flex-col items-center justify-center w-[calc(100%/7)] aspect-[3/5] rounded-2xl transition-all duration-300 relative
                         ${active
-                    ? "bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.6)] scale-110 z-10 text-white"
-                    : "hover:bg-white/10 text-slate-300"
+                    ? "bg-[#2A1D17] shadow-[0_3px_3px_rgba(0,0,0,0.12)] scale-110 z-10 text-white"
+                    : "hover:bg-white/10 text-[#2A1D17]"
                   }`}
               >
                 <span className="text-lg font-bold mb-1">{date.getDate()}</span>
-                <span className={`text-[10px] font-medium ${active ? "text-blue-200" : "text-slate-400"}`}>
+                <span className={`text-[10px] font-medium ${active ? "text-white" : "text-[#2A1D17]"}`}>
                   {weekDaysEn[date.getDay()]}
                 </span>
                 {reserved && !active && (
@@ -177,23 +176,22 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
 
       {/* ================================================================
           💻 PC表示 (hidden lg:flex) - 既存の月間カレンダー
-          ※以下、元のコードをそのまま維持しています
       ================================================================ */}
       <div className="hidden md:flex flex-col w-full h-full">
         {/* Header */}
         <div className="flex items-center justify-between mb-8 shrink-0">
           {/* <input type="month"> */}
-          <button className="flex items-center gap-2 text-gray-800 font-semibold hover:bg-gray-100 px-3 py-2 rounded-lg transition-colors">
+          <button className="flex items-center gap-2 text-[#2A1D17] font-semibold hover:bg-gray-100 px-3 py-2 rounded-lg transition-colors">
             <span>{monthYear}</span>
             <ChevronRight size={20} />
           </button>
           {/* </input> */}
           <div className="flex gap-2">
-            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-600"
+            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-[#2A1D17]"
               onClick={preMonth}>
               <ChevronLeft size={20} />
             </button>
-            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-600"
+            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-[#2A1D17]"
               onClick={nexMonth}>
               <ChevronRight size={20} />
             </button>
@@ -233,7 +231,7 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
                     'text-slate-300 cursor-default'
                     : isActive
                       // 選択中（ホバーで濃い青にする）
-                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/40 hover:bg-blue-700'
+                      ? 'bg-[#2A1D17] text-white shadow-lg shadow-[#2A1D17] hover:bg-[#2A1D17]/80'
                       : index % 7 === 0
                         ? 'text-red-500 hover:bg-white/50'
                         : index % 7 === 6
