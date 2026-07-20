@@ -91,13 +91,13 @@ export default function SettingPage() {
               {/* 入力フォームのdivの下に、これを追加 */}
               <div className="mt-8 grid grid-cols-2 gap-4">
                 <div className="bg-white/5 p-4 rounded-2xl border border-[#B1A58F] text-center">
-                  <div className="text-[#2A1D17] text-xs font-bold uppercase mb-1">男性</div>
+                  <div className="text-[#2A1D17] text-xs font-bold uppercase mb-1">man</div>
                   <div className="text-3xl font-black text-blue-400">
                     {reservables.filter(r => r.sex === 'MAN').length}
                   </div>
                 </div>
                 <div className="bg-white/5 p-4 rounded-2xl border border-[#B1A58F] text-center">
-                  <div className="text-[#2A1D17] text-xs font-bold uppercase mb-1">女性</div>
+                  <div className="text-[#2A1D17] text-xs font-bold uppercase mb-1">woman</div>
                   <div className="text-3xl font-black text-orange-400">
                     {reservables.filter(r => r.sex === 'WOMAN').length}
                   </div>
