@@ -12,14 +12,12 @@ type Props = {
 const ReservableList = ({ reservables, onDelete, onEdit, onAddClick }: Props) => {
   return (
     // propsはタグを属性として渡すのではなく、要素として中身を展開する
-    // v0: bg-white/95 rounded-3xl p-8 shadow-2xl overflow-auto
-    <div className="flex-1 bg-white/40 rounded-3xl p-8 shadow-2xl overflow-y-auto flex flex-col h-full border border-white/20 ">
+    <div className="flex-1 bg-white/40 rounded-3xl p-6 shadow-2xl overflow-y-auto flex flex-col h-full border border-white/20 ">
 
-      {/* Header: v0のレイアウト (flex items-center justify-between) を適用 */}
       <div className="flex items-center justify-between mb-4 shrink-0 flex-wrap">
         <h2 className="text-2xl font-bold text-[#2A1D17]">登録状況</h2>
 
-        <div className="flex gap-3 shrink-0 mt-2">
+        <div className="flex gap-3 shrink-0">
           <button
             // ※1
             // onClick={() => { setSelectedRevId(null), onAddClick }} ← 沼ったポイント
