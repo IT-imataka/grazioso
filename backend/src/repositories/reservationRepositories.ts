@@ -15,7 +15,7 @@ export class ReservationRepository {
     // 保存クエリ発行
     // $1~$5 プレースホルダー SQLインジェクション対策
     const query =
-      "INSERT INTO reservations (reservable_id,user_id,start_time,end_time)VALUES($1,$2,$3,$4)";
+      "INSERT INTO reservations (customer_id,user_id,start_time,end_time)VALUES($1,$2,$3,$4)";
 
     const values = [
       // reservation.id,
@@ -62,7 +62,7 @@ export class ReservationRepository {
     const row = result.rows[0];
     return {
       id: Number(row.id),
-      reservableId: Number(row.reservable_id),
+      reservableId: Number(row.customer_id),
       userId: String(row.user_id),
       startTime: row.start_time,
       endTime: row.end_time,
@@ -76,7 +76,7 @@ export class ReservationRepository {
 
     // 取得クエリ発行
     // 明示的に必要なカラムだけを取得し、数値/文字列の型を保証する
-    const query = `SELECT id, reservable_id, user_id, start_time, end_time FROM reservations`;
+    const query = `SELECT id, customer_id, user_id, start_time, end_time FROM reservations`;
     try {
       const result = await pool.query(query);
 
@@ -86,7 +86,7 @@ export class ReservationRepository {
       // DBのスネークケースをキャメルケースに変換しつつ型を正規化して返す
       return result.rows.map((row) => ({
         id: Number(row.id),
-        reservableId: Number(row.reservable_id),
+        reservableId: Number(row.customer_id),
         userId: String(row.user_id),
         startTime: row.start_time,
         endTime: row.end_time,

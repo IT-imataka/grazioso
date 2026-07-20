@@ -14,7 +14,7 @@ interface Props {
   selectedRevId: number | null;
   // setSelectedRevId: (id: number | null) => void;
   isOpen: boolean;
-  onSave: (name: string, type: "ROOM" | "EQUIPMENT") => void;
+  onSave: (name: string, type: "MAN" | "WOMAN") => void;
   onClose: () => void;
   // onSet: (num: number) => void;
   // もらうpropsの名前は知らなくてよい
@@ -33,19 +33,21 @@ const ReservableModal = ({
   // const { reservables } = useReservables();
   // const { selectedRevId, setSelectedRevId } = useReservations();
   const [name, setName] = useState<string>("");
-  const [type, setType] = useState<"ROOM" | "EQUIPMENT">("ROOM");
+  const [sex, setSex] = useState<"MAN" | "WOMAN">("MAN");
 
   // 物の更新をしたいときのstate設定
   useEffect(() => {
     if (isOpen && selectedRevId) {
-      const target = reservable.find(f => { f.id === selectedRevId });
+      const target = reservable.find(f => f.id === selectedRevId );
       if (target) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         setName(target.name);
-        setType(target.type);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        setSex(target.sex);
       }
     } else if (isOpen && selectedRevId !== null) {
       setName("");
-      setType("ROOM");
+      setSex("MAN");
     }
     // 開閉状態、対象の選択可否状態、
   }, [isOpen, selectedRevId, reservable])
@@ -84,11 +86,11 @@ const ReservableModal = ({
               />
               <select
                 className="w-full px-4 py-2 rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer"
-                value={type}
-                onChange={(e) => setType(e.target.value as "ROOM" | "EQUIPMENT")}
+                value={sex}
+                onChange={(e) => setSex(e.target.value as "MAN" | "WOMAN")}
               >
-                <option value="ROOM">男性</option>
-                <option value="EQUIPMENT">女性</option>
+                <option value="MAN">男性</option>
+                <option value="WOMAN">女性</option>
               </select>
             </div>
           ) : (
@@ -101,12 +103,12 @@ const ReservableModal = ({
                 onChange={(e) => setName(e.target.value)}
               />
               <select name="" id=""
-                value={type}
-                onChange={(e) => setType(e.target.value as "ROOM" | "EQUIPMENT")}
+                value={sex}
+                onChange={(e) => setSex(e.target.value as "MAN" | "WOMAN")}
                 className='w-full px-4 py-2 rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-blue-500 text-slate-700 font-medium transition-all cursor-pointer'>
                 <option value="">選択してください</option>
-                <option value="ROOM">男性</option>
-                <option value="EQUIPMENT">女性</option>
+                <option value="MAN">男性</option>
+                <option value="WOMAN">女性</option>
               </select>
             </div>
           )}
@@ -116,7 +118,7 @@ const ReservableModal = ({
         <div className="flex justify-end gap-3 pt-2">
           {/* キャンセルボタンは上の×で代用できるため、ここは保存ボタンを強調 */}
           <button
-            onClick={() => onSave(name, type)}
+            onClick={() => onSave(name, sex)}
             className="w-full py-3 bg-[#D5BA7A] hover:bg-[#2A1D17] text-[#2A1D17] hover:text-white font-bold rounded-xl shadow-lg shadow-[#2A1D17]/30 transition-all cursor-pointer"
           >
             {saveTitle}

@@ -9,8 +9,8 @@ export default function SettingPage() {
     reservables,
     name,
     setName,
-    type,
-    setType,
+    sex,
+    setSex,
     editId,
     setEditId,
     isCreateOpen,
@@ -75,15 +75,15 @@ export default function SettingPage() {
                 />
                 <select
                   className="bg-white/5 border border-white/10 text-[#2A1D17] p-3 rounded-xl focus:outline-none focus:border-[#2A1D17]/50 [&>option]:text-slate-900 cursor-pointer"
-                  value={type}
-                  onChange={(e) => setType(e.target.value as "ROOM" | "EQUIPMENT")}
+                  value={sex}
+                  onChange={(e) => setSex(e.target.value as "MAN" | "WOMAN")}
                 >
-                  <option value="ROOM">男性</option>
-                  <option value="EQUIPMENT">女性</option>
+                  <option value="MAN">男性</option>
+                  <option value="WOMAN">女性</option>
                 </select>
               </div>
               <button
-                onClick={() => { handleRegister(name, type) }}
+                onClick={() => { handleRegister(name, sex) }}
                 className="bg-[#D5BA7A] hover:bg-[#2A1D17] text-[#2A1D17] hover:text-[#FFFFFF] px-4 py-3 rounded-xl w-full font-bold shadow-lg shadow-[#2A1D17]/30 transition-all active:scale-95"
               >
                 追加する
@@ -93,13 +93,13 @@ export default function SettingPage() {
                 <div className="bg-white/5 p-4 rounded-2xl border border-[#B1A58F] text-center">
                   <div className="text-[#2A1D17] text-xs font-bold uppercase mb-1">男性</div>
                   <div className="text-3xl font-black text-blue-400">
-                    {reservables.filter(r => r.type === 'ROOM').length}
+                    {reservables.filter(r => r.sex === 'MAN').length}
                   </div>
                 </div>
                 <div className="bg-white/5 p-4 rounded-2xl border border-[#B1A58F] text-center">
                   <div className="text-[#2A1D17] text-xs font-bold uppercase mb-1">女性</div>
                   <div className="text-3xl font-black text-orange-400">
-                    {reservables.filter(r => r.type === 'EQUIPMENT').length}
+                    {reservables.filter(r => r.sex === 'WOMAN').length}
                   </div>
                 </div>
               </div>

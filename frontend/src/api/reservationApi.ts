@@ -7,7 +7,7 @@ const API_env_URL =
 export type Reservable = {
   id: number;
   name: string;
-  type: "ROOM" | "EQUIPMENT";
+  sex: "MAN" | "WOMAN";
   isActive: boolean;
 };
 
@@ -53,7 +53,7 @@ export const handleReserve = async (
   endTime: string,
 ) => {
   try {
-    // fetchで統一する設計思想　データの設計図をexpressに渡す
+    // fetchで統一する設計思想 データの設計図をexpressに渡す
     // 誰が、いつ、どうしたいかを荷物にして伝票を送っているイメージ
     const res = await fetch(`${API_env_URL}/reservations`, {
       // 配送の種類

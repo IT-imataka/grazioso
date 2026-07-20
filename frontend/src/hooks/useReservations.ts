@@ -9,10 +9,11 @@ export default function useReservations() {
   const [reservables, setReservables] = useState<Reservable[]>([]);
   const [reservations, setReservations] = useState<Reservation[]>([]);
 
-  // normalize helper: handle different API field names like reservable_id
+  // normalize helper: handle different API field names like customer_id
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const normalizeReservation = (r: any): Reservation => {
     const rawRid =
-      r.reservableId ?? r.reservable_id ?? r.reservable?.id ?? undefined;
+      r.reservableId ?? r.customer_id ?? r.reservable?.id ?? undefined;
     const normalizedRid =
       rawRid != null && rawRid !== "" ? Number(rawRid) : undefined;
     // debug: show how rawRid converts
@@ -105,6 +106,7 @@ export default function useReservations() {
       alert(`予約完了`);
     } catch (error) {
       console.error("エラーです", error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const apiError = error as any;
       const message =
         apiError.response?.data?.message ||
@@ -163,6 +165,7 @@ export default function useReservations() {
 
       alert(`予約更新完了`);
     } catch (error) {
+      console.error(error);
       alert("エラー：予約を更新できませんでした");
     }
   };

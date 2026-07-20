@@ -66,7 +66,7 @@ PostgreSQLを使用し以下のリレーションでデータを管理してい�
       
 - **reservations**(予約データ)
      - `id` (PK) : 予約ID
-     - `reservable_id`: reservablesテーブルへの外部キー
+     - `customer_id`: reservablesテーブルへの外部キー
      - `user_id`: 予約者ID(将来的な機能拡張用)
      - `start_time`: 利用開始日時
      - `end_time`: 利用終了日時

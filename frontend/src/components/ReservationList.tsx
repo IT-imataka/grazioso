@@ -11,7 +11,11 @@ import ReservationCard from "./ReservationCard";
 // 3.その子コンポーネントの中の孫コンポーネントにしっかり配線されているか
 const ReservationList = ({ reservations, reservable, onDelete, onEdit, onAddClick, }:
   { reservations: Reservation[], reservable: Reservable[], onDelete: (id: number) => void, onEdit: (reservation: Reservation) => void, onAddClick: () => void }) => {
-  if (!reservable || !reservations) return <div>読み込み中</div>
+      const reservableMap = useMemo(
+      () => new Map(reservable.map((r) => [String(r.id), r])),
+      [reservable],
+    );
+    if (!reservable || !reservations) return <div>読み込み中</div>
   return (
     // propsはタグを属性として渡すのではなく、要素として中身を展開する
     <div className="flex-1 bg-white/40 rounded-3xl p-8 shadow-2xl overflow-y-auto flex flex-col h-full border border-white/20 ">
@@ -39,10 +43,6 @@ const ReservationList = ({ reservations, reservable, onDelete, onEdit, onAddClic
       <div className="flex-1 overflow-y-auto pr-2 space-y-4 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-black [&::-webkit-scrollbar-thumb]:bg-transparent/90 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/80">
         {/** create a lookup map to avoid repeated finds and unify id types */}
         {(() => {
-          const reservableMap = useMemo(
-            () => new Map(reservable.map((r) => [String(r.id), r])),
-            [reservable],
-          );
           return reservations.map((reservation) => {
             const target = reservableMap.get(String(reservation.reservableId));
             // console.log(reservation.id, reservation.reservableId, '->', target?.id);

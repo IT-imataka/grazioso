@@ -4,7 +4,7 @@
 export interface Reservable {
   id: number;
   name: string;
-  type: "ROOM" | "EQUIPMENT";
+  sex: "MAN" | "WOMAN";
   isActive: boolean;
 }
 

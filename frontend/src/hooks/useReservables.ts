@@ -8,7 +8,7 @@ export const useReservables = () => {
   // 情報を持っておく箱
   const [reservables, setReservables] = useState<Reservable[]>([]);
   const [name, setName] = useState<string>("");
-  const [type, setType] = useState<"ROOM" | "EQUIPMENT">("ROOM");
+  const [sex, setSex] = useState<"MAN" | "WOMAN">("MAN");
 
   // モーダル用
   const [editId, setEditId] = useState<number | null>(null);
@@ -32,10 +32,10 @@ export const useReservables = () => {
 
   // hooksの中は処理だけさせる
   // フェッチしたデータで更新
-  const handleRegister = async (name: string, type: "ROOM" | "EQUIPMENT") => {
+  const handleRegister = async (name: string, sex: "MAN" | "WOMAN") => {
     try {
       // 実行
-      await reservableAPI.regReservables(name, type);
+      await reservableAPI.regReservables(name, sex);
       // 更新後を取得
       const data = await fetchReservables();
       setReservables(data);
@@ -61,10 +61,10 @@ export const useReservables = () => {
   const updateRegister = async (
     id: number,
     name: string,
-    type: "ROOM" | "EQUIPMENT",
+    sex: "MAN" | "WOMAN",
   ) => {
     try {
-      await reservableAPI.updateReservable(id, name, type);
+      await reservableAPI.updateReservable(id, name, sex);
       const data = await fetchReservables();
       setReservables(data);
     } catch (error) {
@@ -82,16 +82,16 @@ export const useReservables = () => {
   };
 
   // modalで保存した時（新規登録用）
-  const onSaveCreate = async (name: string, type: "ROOM" | "EQUIPMENT") => {
+  const onSaveCreate = async (name: string, sex: "MAN" | "WOMAN") => {
     // 登録
-    await handleRegister(name, type);
+    await handleRegister(name, sex);
     setSelectedRevId(null);
     // 閉じる
     setCreateOpen(false);
   };
 
   // modalで変更をしたとき
-  const savingChange = async (name: string, type: "ROOM" | "EQUIPMENT") => {
+  const savingChange = async (name: string, sex: "MAN" | "WOMAN") => {
     // 存在チェック
     if (editId === null) {
       alert("変更対象を選んでください。例：会議室など");
@@ -99,10 +99,10 @@ export const useReservables = () => {
     }
     if (selectedRevId !== null) {
       // 変更
-      await updateRegister(editId, name, type);
+      await updateRegister(editId, name, sex);
     } else {
       // 登録
-      await handleRegister(name, type);
+      await handleRegister(name, sex);
     }
     setEditId(null);
     setSelectedRevId(null);
@@ -112,8 +112,8 @@ export const useReservables = () => {
     reservables,
     name,
     setName,
-    type,
-    setType,
+    sex,
+    setSex,
     editId,
     setEditId,
     isCreateOpen,

@@ -2,7 +2,7 @@
 
 // type 型エイリアス定義の練習
 // import { useState } from "react";
-import { Monitor } from 'lucide-react';
+import { UserRound } from 'lucide-react';
 import type { Reservable } from '../api/reservationApi';
 
 type Props = {
@@ -20,7 +20,7 @@ const ReservableCard = ({ reservable, onDelete, onEdit }: Props) => {
       {/* Icon Area: v0の w-12 h-12 rounded-lg bg-gray-200 ... */}
       <div className="w-12 h-12 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600 shrink-0">
         {/* アイコンはとりあえず固定ですが、種別があれば分岐可能 */}
-        <Monitor size={24} />
+        <UserRound size={24} />
       </div>
 
       {/* Content Area: flex-1 */}
@@ -29,9 +29,9 @@ const ReservableCard = ({ reservable, onDelete, onEdit }: Props) => {
           <h3 className="font-semibold text-gray-800 truncate">
             {/* 名称（会議室の名前など） */}
             {reservable.name || "未設定"}
-            <span className={reservable.type === "ROOM" ? 'block text-sm text-blue-400' : 'block text-sm text-orange-400'}>
+            <span className={reservable.sex === "MAN" ? 'block text-sm text-blue-400' : 'block text-sm text-orange-400'}>
               {/* {(() => { console.log(reservable.type); return null })()} */}
-              Type：{reservable.type}
+              Type：{reservable.sex}
             </span>
           </h3>
           {/* Status Badge: v0のスタイル (text-xs font-semibold px-3 py-1 rounded-full) */}

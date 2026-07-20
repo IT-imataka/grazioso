@@ -52,7 +52,7 @@ export class ReservationService {
       const registered = allRegistered.find(
         (f) => f.id === existing.reservableId,
       );
-      // if (registered?.type === "ROOM") {
+      // if (registered?.type === "MAN") {
       // 重複時間の領域はflagにしておく
       const overlapflag = existStart <= newEnd && newStart <= existEnd;
       // data.startTime <= existing.endTime &&

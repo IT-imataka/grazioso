@@ -19,7 +19,7 @@ export const fetchgReservables = async (): Promise<Reservable[]> => {
 // 登録処理 idはサーバー側で決めるから不要 reservationsの時は特定のものを参照していたから必要だった
 export const regReservables = async (
   name: string,
-  type: "ROOM" | "EQUIPMENT",
+  sex: "MAN" | "WOMAN",
 ): Promise<Reservable[]> => {
   const res = await fetch(`${API_BASE_URL}/reservables`, {
     // どの渡し方か
@@ -31,7 +31,7 @@ export const regReservables = async (
     // どうやって、それを何で渡すか
     body: JSON.stringify({
       name: name,
-      type: type,
+      sex: sex,
       isActive: true,
     }),
   });
@@ -56,7 +56,7 @@ export const deleteReservable = async (id: number) => {
 export const updateReservable = async (
   id: number,
   name: string,
-  type: "ROOM" | "EQUIPMENT",
+  sex: "MAN" | "WOMAN",
 ) => {
   const res = await fetch(`${API_BASE_URL}/reservables/${id}`, {
     method: "PUT",
@@ -65,7 +65,7 @@ export const updateReservable = async (
     },
     body: JSON.stringify({
       name: name,
-      type: type,
+      sex: sex,
       isActive: true,
     }),
   });

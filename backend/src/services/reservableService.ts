@@ -8,7 +8,7 @@ import { error } from "node:console";
 type CreateReservableRequset = {
   // id: string;
   name: string;
-  type: "ROOM" | "EQUIPMENT";
+  sex: "MAN" | "WOMAN";
   isActive: boolean;
 };
 
@@ -39,7 +39,7 @@ export class ReservableService {
     const newReservables: Omit<Reservable, "id"> = {
       // id: newId,
       name: data.name,
-      type: data.type,
+      sex: data.sex,
       isActive: data.isActive,
     };
     // 保存
@@ -67,7 +67,7 @@ export class ReservableService {
   async UpdateReservable(
     id: number,
     name: string,
-    type: "ROOM" | "EQUIPMENT",
+    sex: "MAN" | "WOMAN",
     isActive: boolean,
   ): Promise<Reservable> {
     // updateは更新後のデータを用意する
@@ -75,7 +75,7 @@ export class ReservableService {
     const newData: Partial<Reservable> = {
       id: id,
       name: name,
-      type: type,
+      sex: sex,
       isActive: isActive,
     };
 
