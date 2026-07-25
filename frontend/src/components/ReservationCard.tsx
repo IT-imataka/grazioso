@@ -2,14 +2,14 @@
 
 // type 型エイリアス定義の練習
 // import { useState } from "react";
-import { Monitor } from 'lucide-react';
+import { UserRound } from 'lucide-react';
 import type { Reservation } from "../api/reservationApi";
 import type { Reservable } from '../api/reservationApi';
 
 
 type Props = {
 
-  reservable?: Reservable;
+  reservable: Reservable;
   reservation: Reservation;
 
   //  () => {}ではなく、 () => {}なのは、nullやundefinedが入ってくる可能性を考慮してスルーしたいから
@@ -23,13 +23,11 @@ type Props = {
 const ReservationCard = ({ reservation, reservable, onDelete, onEdit }: Props) => {
   // console.log(reservable);
   return (
-    // v0: bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-6 ...
+
     <div className="group bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-6 hover:shadow-lg transition-shadow border border-gray-200 flex items-center gap-4">
 
-      {/* Icon Area: v0の w-12 h-12 rounded-lg bg-gray-200 ... */}
-      <div className="w-12 h-12 rounded-lg bg-gray-200 flex items-center justify-center text-gray-600 shrink-0">
-        {/* アイコンはとりあえず固定ですが、種別があれば分岐可能 */}
-        <Monitor size={24} />
+      <div className="w-12 h-12 rounded-lg bg-[#2A1D17] flex items-center justify-center text-gray-600 shrink-0">
+        <UserRound size={24} className={reservable.sex === "MAN" ? "text-[#7DD3FC]" : "text-[#FADADD]"}/>
       </div>
 
       {/* Content Area: flex-1 */}
