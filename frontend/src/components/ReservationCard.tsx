@@ -22,6 +22,10 @@ type Props = {
 }
 const ReservationCard = ({ reservation, reservable, onDelete, onEdit }: Props) => {
   // console.log(reservable);
+  if (!reservable) {
+    console.warn("Missing reservable",reservation.id);
+    return <div>予約IDが見つかりません</div>
+  }
   return (
 
     <div className="group bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-6 hover:shadow-lg transition-shadow border border-gray-200 flex items-center gap-4">
@@ -35,7 +39,7 @@ const ReservationCard = ({ reservation, reservable, onDelete, onEdit }: Props) =
         <div className="flex items-center gap-3 mb-1 flex-wrap">
           <h3 className="font-semibold text-gray-800 truncate text-sm">
             {/* 名称（会議室の名前など） */}
-            {reservable?.name ?? "未設定"}
+            {reservable.name ?? "未設定"}
             {/* {reserveble.type} */}
           </h3>
           {/* Status Badge: v0のスタイル (text-xs font-semibold px-3 py-1 rounded-full) */}

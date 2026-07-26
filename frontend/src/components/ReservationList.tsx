@@ -16,6 +16,12 @@ const ReservationList = ({ reservations, reservable, onDelete, onEdit, onAddClic
       [reservable],
     );
     if (!reservable || !reservations) return <div>読み込み中</div>
+
+    // トップレベルに近い位置でmapからのfilterで型安全に担保された配列を作成しておく
+    const entries = reservations
+      .map((reservation) => ({ reservation, target: reservableMap.get(String(reservation.reservableId)) }))
+      .filter((e): e is { reservation: Reservation; target: Reservable } => Boolean(e.target));
+
   return (
     // propsはタグを属性として渡すのではなく、要素として中身を展開する
     <div className="flex-1 bg-white/40 rounded-3xl p-8 shadow-2xl overflow-y-auto flex flex-col h-full border border-white/20 ">
@@ -41,25 +47,17 @@ const ReservationList = ({ reservations, reservable, onDelete, onEdit, onAddClic
       </div>
 
       <div className="flex-1 overflow-y-auto pr-2 space-y-4 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-black [&::-webkit-scrollbar-thumb]:bg-transparent/90 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/80">
-        {/** create a lookup map to avoid repeated finds and unify id types */}
-        {(() => {
-          return reservations.map((reservation) => {
-            const target = reservableMap.get(String(reservation.reservableId));
-            // console.log(reservation.id, reservation.reservableId, '->', target?.id);
-            return (
-              <ReservationCard
-                key={reservation.id}
-                reservable={target}
-                reservation={reservation}
-                onDelete={onDelete}
-                onEdit={onEdit}
-              />
-            );
-          });
-        })()}
+        {entries.map(({ reservation, target }) => (
+          <ReservationCard
+            key={reservation.id}
+            reservable={target}
+            reservation={reservation}
+            onDelete={onDelete}
+            onEdit={onEdit}
+          />
+        ))}
       </div>
 
-      {/* Footer Info: v0にあるフッター装飾を追加（ロジックには影響しません） */}
       <div className="mt-4 pt-6 border-t border-gray-200 text-center text-sm text-gray-500 shrink-0">
         Selected Date: {new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
       </div>
