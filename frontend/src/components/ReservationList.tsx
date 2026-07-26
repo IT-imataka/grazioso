@@ -30,6 +30,8 @@ const ReservationList = ({ activeDate, reservations, reservable, onDelete, onEdi
     const entries = visibleReservations
       .map((reservation) => ({ reservation, target: reservableMap.get(String(reservation.reservableId)) }))
       .filter((e): e is { reservation: Reservation; target: Reservable } => Boolean(e.target));
+
+    const titleText = activeDate ? `${activeDate.getMonth() + 1}月${activeDate.getDate()}日 予約状況` : `予約一覧` ;
     if (!reservable || !reservations) return <div>読み込み中</div>
           
   return (
@@ -38,7 +40,7 @@ const ReservationList = ({ activeDate, reservations, reservable, onDelete, onEdi
 
       {/* Header */}
       <div className="flex items-center justify-between mb-4 shrink-0 flex-wrap">
-        <h2 className="text-2xl font-bold text-[#2A1D17]">本日の予約状況</h2>
+        <h2 className="text-2xl font-bold text-[#2A1D17]">{titleText}</h2>
 
         <div className="flex gap-3 shrink-0 mt-2">
           {/* 新規予約ボタン */}
