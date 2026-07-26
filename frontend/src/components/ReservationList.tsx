@@ -9,19 +9,29 @@ import ReservationCard from "./ReservationCard";
 // 1.関数を渡しますと宣言
 // 2.該当の子コンポーネントに引数が渡されているか、その型定義がなされているかを確認しにいく
 // 3.その子コンポーネントの中の孫コンポーネントにしっかり配線されているか
-const ReservationList = ({ reservations, reservable, onDelete, onEdit, onAddClick, }:
-  { reservations: Reservation[], reservable: Reservable[], onDelete: (id: number) => void, onEdit: (reservation: Reservation) => void, onAddClick: () => void }) => {
+const ReservationList = ({ activeDate, reservations, reservable, onDelete, onEdit, onAddClick, }:
+  { activeDate: Date | null, reservations: Reservation[], reservable: Reservable[], onDelete: (id: number) => void, onEdit: (reservation: Reservation) => void, onAddClick: () => void }) => {
       const reservableMap = useMemo(
-      () => new Map(reservable.map((r) => [String(r.id), r])),
+      () => new Map((reservable ?? []).map((r) => [String(r.id), r])),
       [reservable],
     );
-    if (!reservable || !reservations) return <div>読み込み中</div>
+
+    // visibleReservations: activeDate が指定されていればその日の予約のみ抽出
+    const visibleReservations = useMemo(() => {
+      if (!activeDate) return reservations;
+      const isSameDate = (a: Date, b: Date) =>
+        a.getFullYear() === b.getFullYear() &&
+        a.getMonth() === b.getMonth() &&
+        a.getDate() === b.getDate();
+      return reservations.filter((r) => isSameDate(new Date(r.startTime), activeDate));
+    }, [reservations, activeDate]);
 
     // トップレベルに近い位置でmapからのfilterで型安全に担保された配列を作成しておく
-    const entries = reservations
+    const entries = visibleReservations
       .map((reservation) => ({ reservation, target: reservableMap.get(String(reservation.reservableId)) }))
       .filter((e): e is { reservation: Reservation; target: Reservable } => Boolean(e.target));
-
+    if (!reservable || !reservations) return <div>読み込み中</div>
+          
   return (
     // propsはタグを属性として渡すのではなく、要素として中身を展開する
     <div className="flex-1 bg-white/40 rounded-3xl p-8 shadow-2xl overflow-y-auto flex flex-col h-full border border-white/20 ">
@@ -43,7 +53,7 @@ const ReservationList = ({ reservations, reservable, onDelete, onEdit, onAddClic
 
       {/* 件数表示: デザインに合わせて少し控えめに配置 */}
       <div className="mb-4 px-1">
-        <span className="text-xm font-semibold text-[#2A1D17]">Total: {reservations.length}</span>
+        <span className="text-xm font-semibold text-[#2A1D17]">Total: {entries.length}</span>
       </div>
 
       <div className="flex-1 overflow-y-auto pr-2 space-y-4 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-black [&::-webkit-scrollbar-thumb]:bg-transparent/90 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/80">
