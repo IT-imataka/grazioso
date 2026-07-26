@@ -14,6 +14,8 @@ export default function Dashboard() {
   const {
     reservables,
     reservations,
+    activeDate,
+    setactiveDate,
     // 予約ボタンの開閉
     isCreateOpen,
     setCreateOpen,
@@ -85,6 +87,8 @@ export default function Dashboard() {
                   reservations={reservations}
                   // クリックされた日付でモーダルを開く
                   onSelectDate={(date) => {
+                    setactiveDate(date);
+
                     const start = new Date(date);
                     start.setHours(9, 0, 0);
                     const end = new Date(date);
@@ -105,6 +109,7 @@ export default function Dashboard() {
             {/* 予約リストエリア */}
             <section className="h-auto lg:h-full lg:overflow-y-auto min-w-0 !flex flex-col lg:rounded-[2rem] lg:bg-transparent">
               <ReservationList
+                activeDate={activeDate}
                 reservable={reservables}
                 reservations={reservations}
                 onAddClick={() => setCreateOpen(true)}

@@ -30,6 +30,8 @@ export default function useReservations() {
     } as Reservation;
   };
 
+  const [activeDate, setactiveDate] = useState<Date | null>(null);
+
   // 入力フォーム用
   // 新規予約ボタン
   const [isCreateOpen, setCreateOpen] = useState(false);
@@ -52,6 +54,20 @@ export default function useReservations() {
     await handleReserve(selectedRevId);
     setCreateOpen(false);
   };
+
+  // 選択された日付が現在の状態の日付と同じか判定する関数
+  // const isSameDate = (targetDate: Date, judjeDate : Date): boolean => {
+  //   if (!targetDate || !judjeDate) return false;
+  //   // 比較するのはミリ秒ごと
+  //   return (
+  //     targetDate.getFullYear() === judjeDate.getFullYear() &&
+  //     targetDate.getMonth() === judjeDate.getMonth() &&
+  //     targetDate.getDate() === judjeDate.getDate()
+  //   );
+  // };
+  // const isSelected = (targetDate: Date) => isSameDate(activeDate,targetDate);
+  // const filterdReservations = reservations.filter(res => isSelected(activeDate)) 
+
 
   useEffect(() => {
     // 非同期でデータを貰い、Stateの更新だけを行うように変更
@@ -117,13 +133,6 @@ export default function useReservations() {
 
   // // 削除処理
   const handleCancel = async (reservationId: number) => {
-    // if (window.confirm("本当に消しますか？")) {
-    //   await fetch(`http://localhost:3000/reservations${reservationId}`, {
-    //     method: "DELETE",
-    //   })
-    //   fetchReservations();
-    // }
-    // ↑でもよいが、インデントが深くなるので、ダメなら弾く、okなら通すでガード
 
     if (!window.confirm("本当にキャンセルしますか？")) {
       return;
@@ -194,6 +203,8 @@ export default function useReservations() {
   return {
     reservables,
     reservations,
+    activeDate,
+    setactiveDate,
     // 新規予約用
     isCreateOpen,
     setCreateOpen,
