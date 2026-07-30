@@ -35,6 +35,7 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
   const prevMonthDate = getDateInMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
 
   const TOTAL_DAYS = 35;
+  const MONTHS_LENAGE = 12;
 
   const days = [];
   // 当月日付の生成
@@ -54,9 +55,13 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
   const weekDays = ['日', '月', '火', '水', '木', '金', '土']
 
   // ==========================================
-  // 📱 追加ロジック (スマホ用・週表示)
+  // 📱 追加ロジック (スマホ用・週表示,月表示)
   // ==========================================
-  const [currentWeekStart, setCurrentWeekStart] = useState(new Date()); // 週の開始日
+  // 週の開始日
+  const [currentWeekStart, setCurrentWeekStart] = useState(new Date()); 
+  // 月のドロップダウン
+  const [isMonthOpen, setisMonthOpen] = useState(false);
+  const year = currentMonth.getFullYear();
 
   // 今週の日付配列を生成する関数
   const getWeekDays = () => {
@@ -90,6 +95,11 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
     d.setDate(d.getDate() + 7);
     setCurrentWeekStart(d);
   };
+  // 月選択へ
+    const monthList = Array.from({length : MONTHS_LENAGE},(_,i) => {
+      return new Date(year,i,1);
+    }
+    )
 
   // 指定した日付に予約があるかどうかの関数
   const hasReservation = (target: Date) => {
@@ -136,9 +146,26 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
       <div className="block md:hidden w-full mb-2">
         {/* スマホ用ヘッダー */}
         <div className="flex justify-between items-center mb-4 px-2">
-          <h2 className="text-xl font-bold text-[#2A1D17]">
-            {currentWeekStart.getFullYear()}年{currentWeekStart.getMonth() + 1}月
+          <h2 className="text-xl font-bold text-[#2A1D17]" 
+            onClick={() =>  setisMonthOpen(!isMonthOpen)}>
+            {currentWeekStart.getFullYear()}年{currentWeekStart.getMonth() + 1}月&nbsp;▼
           </h2>
+          {isMonthOpen && (
+            <div>
+            {monthList.map((date) => {
+                const label = `${currentWeekStart.getFullYear()}年${currentWeekStart.getMonth()}月`;
+                return (
+                  <div className="text-xl font-bold text-[#2A1D17] "
+                  onClick={() => {
+                    setCurrentWeekStart(date);
+                    setisMonthOpen(false);
+                  }}>
+                    {label}
+                  </div>
+                )
+              })}
+              </div>
+          )}
           <div className="flex gap-4 text-[#2A1D17]">
             <button onClick={preWeek} className="p-1 hover:text-white"><ChevronLeft size={32} /></button>
             <button onClick={nextWeek} className="p-1 hover:text-white"><ChevronRight size={32} /></button>
