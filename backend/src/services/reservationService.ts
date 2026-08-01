@@ -1,5 +1,5 @@
 // まずは型定義をインポート
-import { Reservation } from "../types/models";
+import { Reservation, ReservationsStatus } from "../types/models";
 
 // * as で名前空間としてインポートしていたオブジェクトたちをインスタンス化された1つの箱としてインポートする
 import reservationRepository from "../repositories/reservationRepositories";
@@ -12,6 +12,7 @@ type CreateReservationRequest = {
   userId: string;
   startTime: string;
   endTime: string;
+  status: ReservationsStatus;
 };
 
 // public と privateの使い分け
@@ -74,6 +75,7 @@ export class ReservationService {
       userId: data.userId,
       startTime: data.startTime,
       endTime: data.endTime,
+      status: data.status
     };
     // リポジトリに保存
     reservationRepository.create(newreservation);

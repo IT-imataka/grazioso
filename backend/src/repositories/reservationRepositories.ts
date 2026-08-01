@@ -15,7 +15,7 @@ export class ReservationRepository {
     // 保存クエリ発行
     // $1~$5 プレースホルダー SQLインジェクション対策
     const query =
-      "INSERT INTO reservations (customer_id,user_id,start_time,end_time)VALUES($1,$2,$3,$4)";
+      "INSERT INTO reservations (customer_id,user_id,start_time,end_time,status)VALUES($1,$2,$3,$4,$5)";
 
     const values = [
       // reservation.id,
@@ -23,6 +23,7 @@ export class ReservationRepository {
       reservation.userId,
       reservation.startTime,
       reservation.endTime,
+      reservation.status
     ];
     await pool.query(query, values);
   }
@@ -46,10 +47,10 @@ export class ReservationRepository {
   ): Promise<Reservation | null> {
     //
     const query =
-      "UPDATE reservations SET start_time = $2,end_time = $3 WHERE id = $1 RETURNING *";
+      "UPDATE reservations SET start_time = $2,end_time = $3,status = $4,WHERE id = $1 RETURNING *";
 
     //
-    const value = [id, newData.startTime, newData.endTime];
+    const value = [id, newData.startTime, newData.endTime, newData.status];
 
     const result = await pool.query(query, value);
 
@@ -66,6 +67,7 @@ export class ReservationRepository {
       userId: String(row.user_id),
       startTime: row.start_time,
       endTime: row.end_time,
+      status: row.status, 
     };
   }
 
@@ -76,7 +78,7 @@ export class ReservationRepository {
 
     // 取得クエリ発行
     // 明示的に必要なカラムだけを取得し、数値/文字列の型を保証する
-    const query = `SELECT id, customer_id, user_id, start_time, end_time FROM reservations`;
+    const query = `SELECT id, customer_id, user_id, start_time, end_time,status FROM reservations`;
     try {
       const result = await pool.query(query);
 
@@ -90,6 +92,7 @@ export class ReservationRepository {
         userId: String(row.user_id),
         startTime: row.start_time,
         endTime: row.end_time,
+        status: row.status,
       }));
     } catch (err) {
       console.error("reservationRepository.findAll error:", err);
