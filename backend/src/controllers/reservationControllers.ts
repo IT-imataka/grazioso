@@ -18,7 +18,7 @@ export class ReservationController {
       // クライアントからのjsonデータを受け取る
       // index.tsでexpress.jsonのミドルの設定をしているのでbodyにある
       // 分割代入でぶっこむ
-      const { reservableId, userId, startTime, endTime } = req.body;
+      const { reservableId, userId, startTime, endTime,status } = req.body;
 
       // Serviceのビジネスロジックに渡して処理
       // 変数は同じ変数名でもう一度宣言する
@@ -27,6 +27,7 @@ export class ReservationController {
         userId,
         startTime: this.toJST(startTime),
         endTime: this.toJST(endTime),
+        status,
       });
 
       res.status(201).json(newreservation);

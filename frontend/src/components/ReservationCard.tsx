@@ -5,6 +5,7 @@
 import { UserRound } from 'lucide-react';
 import type { Reservation } from "../api/reservationApi";
 import type { Reservable } from '../api/reservationApi';
+import { RESERVATION_STATUS_MAP } from '../api/reservationApi';
 
 
 type Props = {
@@ -38,13 +39,12 @@ const ReservationCard = ({ reservation, reservable, onDelete, onEdit }: Props) =
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-3 mb-1 flex-wrap">
           <h3 className="font-semibold text-gray-800 truncate text-sm">
-            {/* 名称（会議室の名前など） */}
+            {/* 名称（お客様の名前など） */}
             {reservable.name ?? "未設定"}
             {/* {reserveble.type} */}
           </h3>
-          {/* Status Badge: v0のスタイル (text-xs font-semibold px-3 py-1 rounded-full) */}
-          <span className="text-xs font-semibold px-3 py-1 rounded-full bg-orange-100 text-orange-600 shrink-0">
-            予約中
+          <span className={`${RESERVATION_STATUS_MAP[reservation.status].color} text-xs font-semibold px-3 py-1 rounded-full shrink-0`}>
+            {RESERVATION_STATUS_MAP[reservation.status].label}
           </span>
         </div>
 
