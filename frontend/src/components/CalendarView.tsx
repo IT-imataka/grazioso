@@ -145,17 +145,17 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
       ================================================================ */}
       <div className="block md:hidden w-full mb-2">
         {/* スマホ用ヘッダー */}
-        <div className="flex justify-between items-center mb-4 px-2">
+        <div className="relative flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-[#2A1D17]" 
             onClick={() =>  setisMonthOpen(!isMonthOpen)}>
             {currentWeekStart.getFullYear()}年{currentWeekStart.getMonth() + 1}月&nbsp;▼
           </h2>
           {isMonthOpen && (
-            <div>
+            <div className='absolute grid grid-cols-4 gap-3 mt-4 p-3 w-full top-full z-99 bg-gradient-to-r from-gray-50 to-gray-100 backdrop-blur-xs shadow-2xl rounded-2xl'>
             {monthList.map((date) => {
-                const label = `${currentWeekStart.getFullYear()}年${currentWeekStart.getMonth()}月`;
+                const label = `${date.getFullYear()}年${date.getMonth() + 1}月`;
                 return (
-                  <div className="text-xl font-bold text-[#2A1D17] "
+                  <div className="text-sm text-[#2A1D17] pb-2"
                   onClick={() => {
                     setCurrentWeekStart(date);
                     setisMonthOpen(false);
