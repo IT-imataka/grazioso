@@ -4,14 +4,16 @@ import type { Reservation } from '../api/reservationApi';
 
 type Props = {
   reservations: Reservation[];
+  currentMonth: Date;
+  setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
   onSelectDate: (data: Date) => void;
 }
 
-const CalendarView = ({ reservations, onSelectDate }: Props) => {
+const CalendarView = ({ reservations, currentMonth, setCurrentMonth, onSelectDate }: Props) => {
   // ==========================================
   // 💻 既存のロジック (PC用・月表示)
   // ==========================================
-  const [currentMonth, setCurrentMonth] = useState(new Date());
+  // const [currentMonth, setCurrentMonth] = useState(new Date());
   const [activeDate, setactiveDate] = useState<Date | null>(null);
 
   // 当月末日の取得関数
@@ -63,8 +65,9 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
   // ==========================================
   // 週の開始日
   const [currentWeekStart, setCurrentWeekStart] = useState(new Date()); 
-  console.log("🌟 現在のリスト用月:", currentMonth.getMonth() + 1, "月");
-  console.log("📱 現在のスマホ用月:", currentWeekStart.getMonth() + 1, "月");
+  // console.log("🌟 現在のリスト用月:", currentMonth.getMonth() + 1, "月");
+  // console.log("📱 現在のスマホ用月:", currentWeekStart.getMonth() + 1, "月");
+  
   // 月のドロップダウン
   const [isMonthOpen, setisMonthOpen] = useState(false);
   const year = currentMonth.getFullYear();

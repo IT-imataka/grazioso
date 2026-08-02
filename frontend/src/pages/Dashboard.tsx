@@ -17,7 +17,7 @@ export default function Dashboard() {
     activeDate,
     setactiveDate,
     currentMonth,
-    // setCurrentMonth,
+    setCurrentMonth,
     // 予約ボタンの開閉
     isCreateOpen,
     setCreateOpen,
@@ -90,6 +90,8 @@ export default function Dashboard() {
               <div className="flex-1 h-full w-full">
                 <CalendarView
                   reservations={reservations}
+                  currentMonth={currentMonth}
+                  setCurrentMonth={setCurrentMonth}
                   // クリックされた日付でモーダルを開く
                   onSelectDate={(date) => {
                     setactiveDate(date);
