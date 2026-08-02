@@ -31,6 +31,8 @@ export default function useReservations() {
   };
 
   const [activeDate, setactiveDate] = useState<Date | null>(null);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
 
   // 入力フォーム用
   // 新規予約ボタン
@@ -55,20 +57,6 @@ export default function useReservations() {
     await handleReserve(selectedRevId);
     setCreateOpen(false);
   };
-
-  // 選択された日付が現在の状態の日付と同じか判定する関数
-  // const isSameDate = (targetDate: Date, judjeDate : Date): boolean => {
-  //   if (!targetDate || !judjeDate) return false;
-  //   // 比較するのはミリ秒ごと
-  //   return (
-  //     targetDate.getFullYear() === judjeDate.getFullYear() &&
-  //     targetDate.getMonth() === judjeDate.getMonth() &&
-  //     targetDate.getDate() === judjeDate.getDate()
-  //   );
-  // };
-  // const isSelected = (targetDate: Date) => isSameDate(activeDate,targetDate);
-  // const filterdReservations = reservations.filter(res => isSelected(activeDate)) 
-
 
   useEffect(() => {
     // 非同期でデータを貰い、Stateの更新だけを行うように変更
@@ -208,6 +196,8 @@ export default function useReservations() {
     reservations,
     activeDate,
     setactiveDate,
+    currentMonth,
+    setCurrentMonth,
     // 新規予約用
     isCreateOpen,
     setCreateOpen,
