@@ -21,11 +21,15 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
 
   // 先月の描画関数
   const preMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
+    const newDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1);
+    setCurrentMonth(newDate);
+    setCurrentWeekStart(newDate);
   }
   // 来月の描画関数
   const nexMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
+    const newDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
+    setCurrentMonth(newDate);
+    setCurrentWeekStart(newDate);
   }
 
   // 月末日
@@ -59,6 +63,8 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
   // ==========================================
   // 週の開始日
   const [currentWeekStart, setCurrentWeekStart] = useState(new Date()); 
+  console.log("🌟 現在のリスト用月:", currentMonth.getMonth() + 1, "月");
+  console.log("📱 現在のスマホ用月:", currentWeekStart.getMonth() + 1, "月");
   // 月のドロップダウン
   const [isMonthOpen, setisMonthOpen] = useState(false);
   const year = currentMonth.getFullYear();
@@ -157,6 +163,8 @@ const CalendarView = ({ reservations, onSelectDate }: Props) => {
                 return (
                   <div className="text-sm text-[#2A1D17] pb-2"
                   onClick={() => {
+                    // console.log("今リストに渡ってきている月は：",); 
+                    setCurrentMonth(date); 
                     setCurrentWeekStart(date);
                     setisMonthOpen(false);
                   }}>

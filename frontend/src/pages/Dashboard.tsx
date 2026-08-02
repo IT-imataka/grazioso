@@ -16,6 +16,8 @@ export default function Dashboard() {
     reservations,
     activeDate,
     setactiveDate,
+    currentMonth,
+    // setCurrentMonth,
     // 予約ボタンの開閉
     isCreateOpen,
     setCreateOpen,
@@ -113,6 +115,7 @@ export default function Dashboard() {
             <section className="h-auto lg:h-full lg:overflow-y-auto min-w-0 !flex flex-col lg:rounded-[2rem] lg:bg-transparent">
               <ReservationList
                 activeDate={activeDate}
+                currentMonth={currentMonth}
                 reservable={reservables}
                 reservations={reservations}
                 onAddClick={() => setCreateOpen(true)}

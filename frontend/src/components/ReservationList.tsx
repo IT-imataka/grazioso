@@ -9,22 +9,34 @@ import ReservationCard from "./ReservationCard";
 // 1.関数を渡しますと宣言
 // 2.該当の子コンポーネントに引数が渡されているか、その型定義がなされているかを確認しにいく
 // 3.その子コンポーネントの中の孫コンポーネントにしっかり配線されているか
-const ReservationList = ({ activeDate, reservations, reservable, onDelete, onEdit, onAddClick, }:
-  { activeDate: Date | null, reservations: Reservation[], reservable: Reservable[], onDelete: (id: number) => void, onEdit: (reservation: Reservation) => void, onAddClick: () => void }) => {
-      const reservableMap = useMemo(
+const ReservationList = ({ activeDate, currentMonth, reservations, reservable, onDelete, onEdit, onAddClick, }:
+  { activeDate: Date | null, currentMonth: Date; reservations: Reservation[], reservable: Reservable[], onDelete: (id: number) => void, onEdit: (reservation: Reservation) => void, onAddClick: () => void }) => {
+    // console.log("今リストに渡ってきている月は：",currentMonth);
+    const reservableMap = useMemo(
       () => new Map((reservable ?? []).map((r) => [String(r.id), r])),
       [reservable],
     );
 
     // visibleReservations: activeDate が指定されていればその日の予約のみ抽出
     const visibleReservations = useMemo(() => {
-      if (!activeDate) return reservations;
+
+      // 非選択時は今月のリストのみ表示
+      const isSameMonth = (a: Date, b: Date) =>
+        a.getFullYear() === b.getFullYear() &&
+        a.getMonth() === b.getMonth();
+      if (!activeDate) {
+        // const today = new Date();
+        return reservations.filter(reservation => isSameMonth(new Date(reservation.startTime), currentMonth))
+      }
+
+      // 選択時はその日付のみリストに表示
       const isSameDate = (a: Date, b: Date) =>
         a.getFullYear() === b.getFullYear() &&
         a.getMonth() === b.getMonth() &&
         a.getDate() === b.getDate();
-      return reservations.filter((r) => isSameDate(new Date(r.startTime), activeDate));
-    }, [reservations, activeDate]);
+      return reservations.filter((reservation) => isSameDate(new Date(reservation.startTime), activeDate));
+      
+    }, [reservations, activeDate, currentMonth]);
 
     // トップレベルに近い位置でmapからのfilterで型安全に担保された配列を作成しておく
     const entries = visibleReservations

@@ -31,6 +31,8 @@ export default function useReservations() {
   };
 
   const [activeDate, setactiveDate] = useState<Date | null>(null);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
 
   // 入力フォーム用
   // 新規予約ボタン
@@ -208,6 +210,8 @@ export default function useReservations() {
     reservations,
     activeDate,
     setactiveDate,
+    currentMonth,
+    setCurrentMonth,
     // 新規予約用
     isCreateOpen,
     setCreateOpen,
