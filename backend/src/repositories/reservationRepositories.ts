@@ -47,7 +47,7 @@ export class ReservationRepository {
   ): Promise<Reservation | null> {
     //
     const query =
-      "UPDATE reservations SET start_time = $2,end_time = $3,status = $4,WHERE id = $1 RETURNING *";
+      "UPDATE reservations SET start_time = $2,end_time = $3,status = $4 WHERE id = $1 RETURNING *";
 
     //
     const value = [id, newData.startTime, newData.endTime, newData.status];

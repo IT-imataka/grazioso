@@ -44,6 +44,7 @@ export default function useReservations() {
   const [newendTime, setnewEndTime] = useState("");
 
   const [selectedRevId, setSelectedRevId] = useState<number | null>(null);
+  const [editStatus, setEditStatus] = useState<string>("");
 
   // ※1 中身
   const onSaveCreate = async () => {
@@ -111,6 +112,7 @@ export default function useReservations() {
         reserveId,
         new Date(startTime).toISOString(),
         new Date(endTime).toISOString(),
+        'pending',
       );
 
       // 更新されたデータを再取得
@@ -164,6 +166,7 @@ export default function useReservations() {
         id,
         new Date(startTime).toISOString(),
         new Date(endTime).toISOString(),
+        editStatus
       );
 
       // データ再取得
@@ -212,6 +215,8 @@ export default function useReservations() {
     handleReserve,
     selectedRevId,
     setSelectedRevId,
+    editStatus,
+    setEditStatus,
     startTime,
     setstartTime,
     endTime,
