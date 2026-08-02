@@ -5,16 +5,18 @@ import { X } from 'lucide-react';
 // import { useReservables } from '../hooks/useReservables';
 // import useReservations from '../hooks/useReservations';
 import type { Reservable } from '../api/reservationApi';
+import { RESERVATION_STATUS_MAP } from '../api/reservationApi';
 
 interface Props {
   // 新規予約でも使いまわすためにpropsを汎用化
   reservable: Reservable[];
   selectedRevId: number | null;
-  // setSelectedRevId: (id: number | null) => void;
+  editStatus: string;
   isOpen: boolean;
   onSave: () => void;
   onClose: () => void;
   onSet: (num: number) => void;
+  onSetStatus: (str: string) => void;
   // もらうpropsの名前は知らなくてよい
   startTime: string;
   setstartTime: (value: string) => void;
@@ -27,8 +29,8 @@ interface Props {
 const ReservationModal = ({
   reservable,
   selectedRevId,
-  // setSelectedRevId,
-  isOpen, onSave, onClose, onSet, startTime, endTime, setstartTime, setendTime,
+  editStatus,
+  isOpen, onSave, onClose, onSet, onSetStatus ,startTime, endTime, setstartTime, setendTime,
   title = "予約時間の変更", saveTitle = "変更を保存" }: Props) => {
   // 呼び出すために使っていたこれらも不要 後学のために残す
   // const { reservables } = useReservables();
@@ -82,7 +84,7 @@ const ReservationModal = ({
         </div>
 
         <div className='mb-6'>
-          <label htmlFor="" className='block text-xs font-medium text-slate-600 uppercase mb-2 mb-1'>予約するものを選択してください</label>
+          <label htmlFor="" className='block text-xs font-medium text-slate-600 uppercase mb-2 mb-1'>お客様を選択</label>
           <select name="" id=""
             value={selectedRevId ?? ""}
             onChange={(e) => {
@@ -95,6 +97,24 @@ const ReservationModal = ({
             {reservable.map((items) => (
               <option key={items.id} value={items.id}>
                 {items.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      
+        <div className='mb-6'>
+          <label htmlFor="" className='block text-xs font-medium text-slate-600 uppercase mb-2 mb-1'>ステータスを選択</label>
+          <select name="" id=""
+            value={editStatus}
+            onChange={(e) => {
+              const newStatus = e.target.value;
+              onSetStatus(newStatus)
+            }}
+            className='w-full px-4 py-2 rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer'>
+            <option value="">選択してください</option>
+            {Object.entries(RESERVATION_STATUS_MAP).map(([statusKey, statusValue]) => (
+              <option key={statusKey} value={statusKey}>
+                {statusValue.label}
               </option>
             ))}
           </select>

@@ -62,6 +62,7 @@ export const handleReserve = async (
   reserveId: number,
   startTime: string,
   endTime: string,
+  status: string,
 ) => {
   try {
     // fetchで統一する設計思想 データの設計図をexpressに渡す
@@ -79,6 +80,7 @@ export const handleReserve = async (
         userId: "XXXX",
         startTime: startTime,
         endTime: endTime,
+        status: status,
       }),
     });
     if (!res.ok) {
@@ -116,6 +118,7 @@ export const handleUpdate = async (
   id: number,
   startTime: string,
   endTime: string,
+  status: string,
 ) => {
   const res = await fetch(`${API_env_URL}/reservations/${id}`, {
     method: "PUT",
@@ -123,6 +126,7 @@ export const handleUpdate = async (
     body: JSON.stringify({
       startTime: startTime,
       endTime: endTime,
+      status: status,
     }),
   });
   // const data = await res.json();

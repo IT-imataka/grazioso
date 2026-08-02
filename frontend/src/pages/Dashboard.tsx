@@ -20,6 +20,9 @@ export default function Dashboard() {
     isCreateOpen,
     setCreateOpen,
     onSaveCreate,
+    // 共通
+    editStatus,
+    setEditStatus,
     // 新規予約用
     selectedRevId,
     setSelectedRevId,
@@ -129,6 +132,8 @@ export default function Dashboard() {
         onSave={onSaveCreate}
         onClose={() => setCreateOpen(false)}
         onSet={(id) => setSelectedRevId(id)}
+        editStatus={editStatus}
+        onSetStatus={setEditStatus}
         startTime={startTime}
         setstartTime={setstartTime}
         endTime={endTime}
@@ -145,6 +150,8 @@ export default function Dashboard() {
         onSave={savingchange}
         onClose={() => setEditId(null)}
         onSet={(id) => setSelectedRevId(id)}
+        editStatus={editStatus}
+        onSetStatus={setEditStatus}
         startTime={newstartTime}
         setstartTime={setnewStartTime}
         endTime={newendTime}

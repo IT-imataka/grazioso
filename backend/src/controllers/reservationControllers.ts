@@ -87,13 +87,16 @@ export class ReservationController {
   update = async (req: Request, res: Response) => {
     // 更新する情報を用意する
     const idstr = req.params.id;
+    const statusStr = req.params.status;
+
     // console.log("id", id);
-    const { startTime, endTime } = req.body;
+    const { startTime, endTime, status } = req.body;
+    console.log("受け取ったステータス", status);
     // console.log("【Controller】受け取ったID:", id);
     // console.log("【Controller】受け取ったBody:", req.body);
     // ガード節
-    if (!idstr || !startTime || !endTime) {
-      res.status(400).json({ message: "id,startTime,endTimeは必須です" });
+    if (!idstr || !startTime || !endTime || !status) {
+      res.status(400).json({ message: "id,startTime,endTime,statusは必須です" });
       return;
     }
     const id = Number(idstr);
@@ -102,6 +105,7 @@ export class ReservationController {
         id,
         this.toJST(startTime),
         this.toJST(endTime),
+        status,
       );
       if (!update) {
         console.log("IDが見つからないため 404 を返します");

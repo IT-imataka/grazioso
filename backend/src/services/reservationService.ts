@@ -106,12 +106,14 @@ export class ReservationService {
     id: number,
     startTime: string,
     endTime: string,
+    status: ReservationsStatus,
   ): Promise<Reservation> {
     // Repoに渡す時の型にも同様にPartialを使う
     const newData: Partial<Reservation> = {
       id: id,
       startTime: startTime,
       endTime: endTime,
+      status: status,
     };
     const updated = await reservationRepository.update(id, newData);
     if (!updated) {
