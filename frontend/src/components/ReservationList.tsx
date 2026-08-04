@@ -58,7 +58,7 @@ const ReservationList = ({ activeDate, currentMonth, reservations, reservable, o
           {/* 新規予約ボタン */}
           <button
             onClick={onAddClick}
-            className="flex items-center gap-2 px-4 py-2 bg-[#D5BA7A] hover:bg-[#2A1D17] text-[#2A1D17] hover:text-[#FFFFFF]/90 rounded-lg transition-colors font-bold shadow-md shadow-[#2A1D17]-500/30 cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 bg-[#D5BA7A] hover:bg-[#2A1D17] text-[#2A1D17] hover:text-[#FFFFFF]/90 rounded-lg transition-colors font-bold shadow-md shadow-[#2A1D17]-500/30 cursor-pointer transition-all active:scale-95"
           >
             New Reservation
           </button>
