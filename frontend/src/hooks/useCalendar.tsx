@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import type { Reservation } from '../api/reservationApi';
 
 type Props = {
   currentMonth: Date;
@@ -10,7 +9,6 @@ export default function useCalendar ({ currentMonth,setCurrentMonth }: Props) {
   // ==========================================
   // 💻 既存のロジック (PC用・月表示)
   // ==========================================
-//   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [activeDate, setactiveDate] = useState<Date | null>(null);
 
   // 当月末日の取得関数
@@ -101,32 +99,30 @@ export default function useCalendar ({ currentMonth,setCurrentMonth }: Props) {
     d.setDate(d.getDate() + 7);
     setCurrentWeekStart(d);
   };
-  // 月選択へ
-    const monthList = Array.from({length : MONTHS_LENAGE},(_,i) => {
-      return new Date(year,i,1);
-    }
-    )
 
-      return {
-        // currentMonth,
-        // setCurrentMonth,
-        activeDate,
-        setactiveDate,
-        getDateInMonth,
-        getFirstDayOfMonth,
-        preMonth,
-        nexMonth,
-        days,
-        monthYear,
-        weekDays,
-        currentWeekStart,
-        setCurrentWeekStart,
-        isMonthOpen,
-        setisMonthOpen,
-        weekDates,
-        weekDaysEn,
-        preWeek,
-        nextWeek,
-        monthList,
-      }
+	// 月選択へ
+	const monthList = Array.from({length : MONTHS_LENAGE},(_,i) => {
+		return new Date(year,i,1);
+	})
+
+	return {
+		activeDate,
+		setactiveDate,
+		getDateInMonth,
+		getFirstDayOfMonth,
+		preMonth,
+		nexMonth,
+		days,
+		monthYear,
+		weekDays,
+		currentWeekStart,
+		setCurrentWeekStart,
+		isMonthOpen,
+		setisMonthOpen,
+		weekDates,
+		weekDaysEn,
+		preWeek,
+		nextWeek,
+		monthList,
+	}
 }
