@@ -1,13 +1,14 @@
 import React from "react";
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import useCalendar from "../hooks/useCalendar";
+import useCustomerAvailability from "../hooks/useCustomerAvailability";
 
 type Props = {
   currentMonth: Date;
   setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
 }
 
-export default function AvailabilityTable({ currentMonth,setCurrentMonth }: Props) {
+export default function AvailabilityTable({ currentMonth, setCurrentMonth }: Props) {
   const {
 		weekDates,
 		weekDaysEn,
@@ -21,15 +22,32 @@ export default function AvailabilityTable({ currentMonth,setCurrentMonth }: Prop
     nextWeek,
   } = useCalendar({ currentMonth,setCurrentMonth });
 
+  const { availability } = useCustomerAvailability(currentWeekStart);
+
 
   // 縦軸の時間（10時〜17時）
   const hours = [10, 11, 12, 13, 14, 15, 16, 17];
 
   // ダミーの空き状況判定（後々APIからデータを流し込む部分）
   const getAvailabilityMark = (hour: number, dayIndex: number) => {
-    // モックのように一部が〇になり、他が-になるようなサンプル条件
-    const isAvailable = (hour + dayIndex) % 3 === 0 || (hour === 10 && dayIndex === 0) || (hour === 11 && dayIndex === 1);
-    return isAvailable ? "○" : "-";
+		// 添字でエクスポートしてきた曜日の日付を取得
+		// 日付を格納
+		const targetDate = weekDates[dayIndex]; 
+		const targetCell = new Date(targetDate);
+		// 時間をリセット
+		targetCell.setHours(hour,0,0,0);
+		// APIから取得した日付と、格納した日付の判定
+    const isReseved = availability.some(rev => {
+			// ここで一度newするのは、APIから取得してくるとstringになってしまうから
+			// .getTimeする理由はミリ秒比較にすることで文字列比較の時に比べて僅かな違いによる判定漏れを防ぐため
+			const revStart = new Date(rev.startTime).getTime();
+			const revEnd = new Date(rev.endTime).getTime();
+			const cellTimest = targetCell.getTime();
+			const cellTimeen = cellTimest + (60 * 60 * 1000);
+			return cellTimest < revEnd && revStart <= cellTimeen;
+		})
+
+    return isReseved ? "-" : "○";
   };
 	// 年と月を分けて繋ぐ方法だと、labelと比較する際に別扱いになるため繋げた状態で持っておく
 	const yearmonthText = `${currentWeekStart.getFullYear()}年${currentWeekStart.getMonth() + 1}月`;

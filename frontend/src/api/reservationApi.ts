@@ -56,8 +56,27 @@ export const fetchReservations = async (): Promise<Reservation[]> => {
   return await res.json();
 };
 
+// 空き状況確認用API関数
+// 型明示することで必ずtry-catchを担保する
+export const fetchRevCustomer = async (): Promise<Reservation[]> => {
+	try {
+		const res = await fetch(`${API_env_URL}/reservations`,{
+			method: "GET",
+			headers: {
+				"Content-type":"application/json"
+			},
+		});
+		if (!res.ok) throw new Error("空き状況の取得に失敗しました。");
+		return await res.json();
+
+	} catch (error) {
+		console.error("エラーです",error);
+		throw error;
+	}
+};
+
 // 予約処理の関数
-// 時間あればまた型明示する
+// バックエンド側でresを送る設計にしている以上、必ずreturn
 export const handleReserve = async (
   reserveId: number,
   startTime: string,
@@ -102,7 +121,7 @@ export const handleReserve = async (
 };
 
 // 削除処理の関数
-// 時間あればまた型明示する
+// バックエンド側でresを送る設計にしている以上、必ずreturn
 export const handleCancel = async (reservationId: number) => {
   // methodの更新だけだが,App.tsxに返すため変数に入れる
   const res = await fetch(`${API_env_URL}/reservations/${reservationId}`, {
@@ -113,7 +132,7 @@ export const handleCancel = async (reservationId: number) => {
 };
 
 // 予約更新
-// 時間あればまた型明示する
+// バックエンド側でresを送る設計にしている以上、必ずreturn
 export const handleUpdate = async (
   id: number,
   startTime: string,

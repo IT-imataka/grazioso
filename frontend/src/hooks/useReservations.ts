@@ -121,7 +121,7 @@ export default function useReservations() {
     }
   };
 
-  // // 削除処理
+  // 削除処理
   const handleCancel = async (reservationId: number) => {
 
     if (!window.confirm("本当にキャンセルしますか？")) {
