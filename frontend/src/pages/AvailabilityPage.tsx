@@ -1,7 +1,6 @@
 "use client";
 
 // import CalendarView from "../components/CalendarView";
-// import useReservations from "../hooks/useReservations";
 import AvailabilityTable from "../components/AvailabilityTable";
 import useReservations from "../hooks/useReservations";
 
