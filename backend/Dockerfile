@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # TSをdockerの中でコンパイルする
-RUN npn run build
+RUN npm run build
 
 # ポートの指定
 EXPOSE 8080
