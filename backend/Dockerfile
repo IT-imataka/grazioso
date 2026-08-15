@@ -13,6 +13,9 @@ RUN npm install
 # appにインストールした他のプログラムファイルもコピー
 COPY . .
 
+# TSをdockerの中でコンパイルする
+RUN npn run build
+
 # ポートの指定
 EXPOSE 8080
 ENV PORT=8080
