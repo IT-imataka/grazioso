@@ -5,7 +5,7 @@ import { X } from 'lucide-react';
 // import { useReservables } from '../hooks/useReservables';
 // import useReservations from '../hooks/useReservations';
 import type { Reservable } from '../api/reservationApi';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 // import { useReservables } from '../hooks/useReservables';
 
 interface Props {
@@ -29,28 +29,14 @@ const ReservableModal = ({
   // setSelectedRevId,
   isOpen, onSave, onClose,
   title = "", saveTitle = "", changeTitle = "" }: Props) => {
+	const target = reservable.find(f => f.id === selectedRevId );
   // 呼び出すために使っていたこれらも不要 後学のために残す
   // const { reservables } = useReservables();
   // const { selectedRevId, setSelectedRevId } = useReservations();
-  const [name, setName] = useState<string>("");
-  const [sex, setSex] = useState<"MAN" | "WOMAN">("MAN");
+  const [name, setName] = useState<string>(target ? target.name : "");
+  const [sex, setSex] = useState<"MAN" | "WOMAN">(target ? target.sex : "MAN");
 
   // 物の更新をしたいときのstate設定
-  useEffect(() => {
-    if (isOpen && selectedRevId) {
-      const target = reservable.find(f => f.id === selectedRevId );
-      if (target) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        setName(target.name);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        setSex(target.sex);
-      }
-    } else if (isOpen && selectedRevId !== null) {
-      setName("");
-      setSex("MAN");
-    }
-    // 開閉状態、対象の選択可否状態、
-  }, [isOpen, selectedRevId, reservable])
 
   // 開いていないときはnullで早期リターン
   if (!isOpen) return null;

@@ -173,8 +173,10 @@ export default function useReservations() {
   // 編集用ボタンを押した時の予約されている状態の情報をセットする関数
   const handleEditClick = (reservation: Reservation) => {
     setEditId(reservation.id);
+    setSelectedRevId(reservation.reservableId);
     setnewStartTime(reservation.startTime);
     setnewEndTime(reservation.endTime);
+    setEditStatus(reservation.status);
   };
 
   const savingchange = async () => {

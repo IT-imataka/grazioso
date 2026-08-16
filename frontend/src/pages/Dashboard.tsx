@@ -130,6 +130,7 @@ export default function Dashboard() {
 
       {/* 新規予約用モーダル */}
       <ReservationModal
+        key={selectedRevId ?? "new"}
         mode="create"
         reservable={reservables}
         selectedRevId={selectedRevId}
@@ -149,6 +150,7 @@ export default function Dashboard() {
 
       {/* 編集用モーダル */}
       <ReservationModal
+				key={selectedRevId ?? "none"}
         mode="edit"
         reservable={reservables}
         selectedRevId={selectedRevId}
