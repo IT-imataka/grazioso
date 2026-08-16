@@ -28,14 +28,20 @@ export default function AvailabilityTable({ currentMonth, setCurrentMonth }: Pro
   // 縦軸の時間（10時〜17時）
   const hours = [10, 11, 12, 13, 14, 15, 16, 17];
 
-  // ダミーの空き状況判定（後々APIからデータを流し込む部分）
+  // 空き状況判定
   const getAvailabilityMark = (hour: number, dayIndex: number) => {
 		// 添字でエクスポートしてきた曜日の日付を取得
 		// 日付を格納
 		const targetDate = weekDates[dayIndex]; 
 		const targetCell = new Date(targetDate);
+		const targetDay = targetDate.getDay();
+		const closedDay = 1;
 		// 時間をリセット
 		targetCell.setHours(hour,0,0,0);
+
+		// 定休日判定
+		if (targetDay === closedDay) return;
+
 		// APIから取得した日付と、格納した日付の判定
     const isReseved = availability.some(rev => {
 			// ここで一度newするのは、APIから取得してくるとstringになってしまうから
