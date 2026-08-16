@@ -1,11 +1,12 @@
-# 美容室 空き状況閲覧・予約管理アプリ (Grazioso)
+# 美容室 空き状況閲覧・予約管理アプリ (Grazioso様)
 
 サロンの予約空き状況をリアルタイムに可視化し、オーナーの予約管理業務を効率化するWebアプリケーション
 
 ---
 
 ### [grazioso-wheat.vercel.app](https://grazioso-wheat.vercel.app/)
-👆 実際に動くデモはこちらです
+👆 実際のプロダクトはこちらです
+　 運用は来週以降からを予定しています
 
 ---
 
@@ -22,7 +23,7 @@
 ### オーナー向け（要ログイン）
 - **Supabase Authによる認証・ルートガード**：管理者専用ページ（`/dashboard`、`/settings`）への不正アクセスを保護。
 - **予約登録・編集・削除機能**：日時、顧客名、対応メニューなどのステータス管理（予約中・キャンセル等）。
-- **予約可能枠（リソース）管理**：スタッフや施術枠の登録・管理。
+- **予約対象（リソース）管理**：顧客情報(氏名・性別等)の登録・管理。
 - **入力バリデーション**：開始・終了日時の整合性チェックや重複予約の防止。
 
 ## 🛠️ 技術スタック (Tech Stack)
@@ -35,7 +36,9 @@
 
 ## 🏗️ 設計思想・アーキテクチャ (Architecture)
 
-保守性・テスタビリティ・拡張性を考慮し、バックエンドには **MVCS (Model-View-Controller-Service) アーキテクチャ** を採用し、フロントエンドは **Custom Hooks による関心の分離** を徹底しています。
+保守性・テスタビリティ・拡張性を考慮し、
+バックエンドには **MVCS (Model-View-Controller-Service) アーキテクチャ** を採用、
+フロントエンドは **Custom Hooks による関心の分離** を徹底しています。
 
 ---
 
@@ -56,21 +59,21 @@
 
 PostgreSQL (Supabase) 上で以下のリレーションを構築して運用しています。
 
-- **reservables** (予約対象枠・スタッフマスタ)
+- **customers** (予約対象枠・顧客マスタ)
   - `id` (PK): 一意な識別子
-  - `name`: スタッフ名または席名
-  - `sex` / `type`: カテゴリ属性
+  - `name`: 顧客名
+  - `sex`: 顧客性別
   - `is_active`: 有効フラグ
 
 - **reservations** (予約データ)
   - `id` (PK): 予約ID
-  - `reservable_id` (FK): `reservables.id` への外部キー
-  - `customer_name`: 顧客名
-  - `status`: 予約ステータス（予約中 / キャンセル等）
+  - `customer_id` (FK): `customers.id` への外部キー
   - `start_time`: 施術開始日時
   - `end_time`: 施術終了日時
+  - `user_id`:ログインユーザーID 
+  - `status`: 予約ステータス（予約中 / キャンセル等）
 
-- **関係性**: `reservables` (1) : `reservations` (N)
+- **関係性**: `customers` (1) : `reservations` (N)
 
 ## 💡 工夫した点・課題解決
 
