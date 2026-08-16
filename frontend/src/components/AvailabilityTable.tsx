@@ -134,10 +134,12 @@ export default function AvailabilityTable({ currentMonth, setCurrentMonth }: Pro
       </div>
 
       {/* 下部の【ご案内】ボックス */}
-      <div className="mt-8 bg-[#3D2C22]/80 border border-[#E5C79E]/30 rounded-xl p-5 w-full max-w-xl text-sm text-white/90 shadow-lg">
+      <div className="mt-8 bg-[#3D2C22]/80 border border-[#E5C79E]/30 rounded-xl py-5 px-3 w-full max-w-xl text-sm text-white/90 shadow-lg">
         <p className="font-bold mb-1">【ご案内】</p>
         <p className="leading-relaxed text-xs sm:text-sm">
-          ご予約・ご相談は、お電話または公式LINEにて直接承ります。<br/>こちらは空き状況の確認のみ可能です。
+          <span className="sm:hidden">ご予約・ご相談は、<br/>お電話または公式LINEにて直接承ります。</span>
+          <span className="hidden sm:inline">ご予約・ご相談は、お電話または公式LINEにて直接承ります。</span>
+					<br/>こちらは空き状況の確認のみ可能です。
         </p>
       </div>
     </div>
