@@ -23,7 +23,6 @@ export default function SettingPage() {
     savingChange,
     handleEditClick, } = useReservables();
   return (
-    // 画面: CSSアートに合わせた深い濃紺ベースに変更 (bg-[#0b0e1b])
     // スマホ時はp-0、PC(lg)時はp-8
     <div className="relative !flex h-screen w-full items-center justify-center bg-[#EAD8C3] text-slate-100 font-sans p-0 lg:p-8 overflow-hidden">
       {/* <h1 className="text-2xl font-bold mb-6">会議室・備品の管理</h1> */}
@@ -62,13 +61,13 @@ export default function SettingPage() {
 
             {/* --- 入力フォームエリア (ガラス化) --- */}
             {/* スマホ: h-auto(中身に合わせて伸縮), PC: h-full(画面いっぱい) */}
-            <div className="h-auto lg:h-full bg-gradient-to-br from-[#EAD8C3] to-[#2A1D17]/40 p-6 rounded-[2rem] shadow-xl border border-[#B1A58F]/40 backdrop-blur-md flex flex-col">
+            <div className="h-auto lg:h-full bg-gradient-to-br from-[#EAD8C3] to-[#2A1D17]/40 p-4 rounded-[2rem] shadow-xl border border-[#B1A58F]/40 backdrop-blur-md flex flex-col">
             
               <h2 className="text-lg font-bold text-[#2A1D17] mb-4 pl-1">新規登録</h2>
               <div className="flex flex-col sm:flex-row gap-4 mb-4">
                 <input
                   type="text"
-                  className="bg-white/5 border border-white/10 text-white placeholder-slate-400 p-3 rounded-xl flex-1 focus:outline-none focus:border-[#2A1D17]/50 focus:bg-white/10 transition-all"
+                  className="bg-white/5 border border-white/10 text-[#2A1D17] placeholder-slate-400 p-3 rounded-xl flex-1 focus:outline-none focus:border-[#2A1D17]/50 focus:bg-white/10 transition-all"
                   placeholder="お客様のお名前を入力"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -82,14 +81,8 @@ export default function SettingPage() {
                   <option value="WOMAN">女性</option>
                 </select>
               </div>
-              <button
-                onClick={() => { handleRegister(name, sex) }}
-                className="bg-[#D5BA7A] hover:bg-[#2A1D17] text-[#2A1D17] hover:text-[#FFFFFF] px-4 py-3 rounded-xl w-full font-bold shadow-lg shadow-[#2A1D17]/30 transition-all active:scale-95"
-              >
-                追加する
-              </button>
               {/* 入力フォームのdivの下に、これを追加 */}
-              <div className="mt-8 grid grid-cols-2 gap-4">
+              <div className="mb-4 grid grid-cols-2 gap-4">
                 <div className="bg-white/5 p-4 rounded-2xl border border-[#B1A58F] text-center">
                   <div className="text-[#2A1D17] text-xs font-bold uppercase mb-1">man</div>
                   <div className="text-3xl font-black text-blue-400">
@@ -103,6 +96,12 @@ export default function SettingPage() {
                   </div>
                 </div>
               </div>
+              <button
+                onClick={() => { handleRegister(name, sex) }}
+                className="bg-[#D5BA7A] hover:bg-[#2A1D17] text-[#2A1D17] hover:text-[#FFFFFF] my-3 px-4 py-3 rounded-xl w-full font-bold shadow-lg shadow-[#2A1D17]/30 transition-all active:scale-95"
+              >
+                追加する
+              </button>
             </div>
 
             {/* --- リスト表示エリア (スクロール対応＆ガラス化) --- */}
