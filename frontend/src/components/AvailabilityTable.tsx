@@ -55,7 +55,7 @@ export default function AvailabilityTable({ currentMonth, setCurrentMonth }: Pro
   return (
     <div className="min-h-screen bg-[#2A1D17] text-[#D5BA7A] flex flex-col items-center py-7 px-4">
       <div className="relative w-full flex justify-center mb-6">
-				<div className="flex gap-20 justify-around text-white items-center">
+				<div className="w-full flex justify-between text-white items-center">
 					<button onClick={preWeek} className="p-1 hover:text-white"><ChevronLeft size={32} /></button>
           <h2 className="text-xl font-bold text-white/90"
             onClick={() =>  setisMonthOpen(!isMonthOpen)}>
