@@ -130,6 +130,7 @@ export default function Dashboard() {
 
       {/* 新規予約用モーダル */}
       <ReservationModal
+        mode="create"
         reservable={reservables}
         selectedRevId={selectedRevId}
         isOpen={isCreateOpen}
@@ -148,6 +149,7 @@ export default function Dashboard() {
 
       {/* 編集用モーダル */}
       <ReservationModal
+        mode="edit"
         reservable={reservables}
         selectedRevId={selectedRevId}
         isOpen={!!editId}

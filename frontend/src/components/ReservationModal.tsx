@@ -7,8 +7,11 @@ import { X } from 'lucide-react';
 import type { Reservable } from '../api/reservationApi';
 import { RESERVATION_STATUS_MAP } from '../api/reservationApi';
 
+type ReservationModalMode = "create" | "edit";
+
 interface Props {
   // 新規予約でも使いまわすためにpropsを汎用化
+  mode?: ReservationModalMode;
   reservable: Reservable[];
   selectedRevId: number | null;
   editStatus: string;
@@ -27,14 +30,15 @@ interface Props {
 }
 
 const ReservationModal = ({
+  mode = "edit",
   reservable,
   selectedRevId,
   editStatus,
   isOpen, onSave, onClose, onSet, onSetStatus ,startTime, endTime, setstartTime, setendTime,
   title = "予約時間の変更", saveTitle = "変更を保存" }: Props) => {
-  // 呼び出すために使っていたこれらも不要 後学のために残す
-  // const { reservables } = useReservables();
-  // const { selectedRevId, setSelectedRevId } = useReservations();
+  const statusEntries = mode === "create"
+    ? Object.entries(RESERVATION_STATUS_MAP).filter(([statusKey]) => statusKey === "pending")
+    : Object.entries(RESERVATION_STATUS_MAP);
 
   // 開いていないときはnullで早期リターン
   if (!isOpen) return null;
@@ -112,7 +116,7 @@ const ReservationModal = ({
             }}
             className='w-full px-4 py-2 rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer'>
             <option value="">選択してください</option>
-            {Object.entries(RESERVATION_STATUS_MAP).map(([statusKey, statusValue]) => (
+            {statusEntries.map(([statusKey, statusValue]) => (
               <option key={statusKey} value={statusKey}>
                 {statusValue.label}
               </option>

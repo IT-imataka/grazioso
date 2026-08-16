@@ -20,8 +20,8 @@ const Sidebar = () => {
 
         <nav className="flex flex-col gap-6 flex-1 w-full items-center">
           <button className={`w-12 h-12 rounded-lg hover:bg-[#2A1D17] hover:scale-110 transition-colors flex items-center justify-center text-[#D5BA7A] hover:text-white cursor-pointer shadow-inner
-          ${isActive('/') ? 'bg-[#2A1D17] text-[#D5BA7A] -translate-y-1' : 'text-[#D5BA7A] hover:text-white'}`}>
-            <Link to="/">
+          ${isActive('/dashboard') ? 'bg-[#2A1D17] text-[#D5BA7A]' : 'text-[#D5BA7A] hover:text-white active:scale-95'}`}>
+            <Link to="/dashboard">
               <Home size={24} />
             </Link>
           </button>
@@ -34,7 +34,7 @@ const Sidebar = () => {
             <Folder size={24} />
           </button>
           <button className={`w-12 h-12 rounded-lg hover:bg-[#2A1D17] hover:scale-110 transition-colors flex items-center justify-center text-[#D5BA7A] hover:text-white cursor-pointer shadow-inner
-          ${isActive('/settings') ? 'bg-[#2A1D17] text-[#D5BA7A] -translate-y-1' : 'text-[#D5BA7A] hover:text-white'}`}>
+          ${isActive('/settings') ? 'bg-[#2A1D17] text-[#D5BA7A]' : 'text-[#D5BA7A] hover:text-white active:scale-95'}`}>
             <Link to="/settings">
               <Settings size={24} />
             </Link>
@@ -57,9 +57,9 @@ const Sidebar = () => {
       <div className="lg:hidden absolute bottom-1 left-1/2 -translate-x-1/2 w-[90%] max-w-md z-50">
         <div className="flex justify-around items-center bg-white shadow-[0_8px_30px_rgba(0,0,0,0.12)] border-none rounded-full px-4 py-3 shadow-2xl">
 
-          <Link to="/" className={`p-2 active:scale-95 transition-transform flex flex-col items-center
-             ${isActive('/') ? 'text-[#2A1D17] -translate-y' : 'text-[#D5BA7A] active:scale-95'}`}>
-            <div className={`p-2 rounded-lg transition-all duration-300 ${isActive('/') ? 'bg-[#EAD8C3]/20' : ''}`}>
+          <Link to="/dashboard" className={`p-2 active:scale-95 transition-transform flex flex-col items-center
+             ${isActive('/dashboard') ? 'text-[#2A1D17] -translate-y' : 'text-[#D5BA7A] active:scale-95'}`}>
+            <div className={`p-2 rounded-lg transition-all duration-300 ${isActive('/dashboard') ? 'bg-[#EAD8C3]/20' : ''}`}>
               <Home size={24} />
             </div>
           </Link>
@@ -84,7 +84,7 @@ const Sidebar = () => {
             </div>
           </Link>
 
-					<button className={`w-12 h-12 rounded-lg hover:bg-[#2A1D17] hover:scale-110 transition-colors flex items-center justify-center text-[#D5BA7A] hover:text-white cursor-pointer shadow-inner
+					<button className={`w-12 h-12 rounded-lg active:scale-95 transition-colors flex items-center justify-center text-[#D5BA7A] hover:text-white cursor-pointer shadow-inner
 						`}>
 						<LogOut size={24} onClick={handleLogout}/>
 					</button>
