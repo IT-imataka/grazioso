@@ -72,7 +72,8 @@ export default function useCalendar ({ currentMonth,setCurrentMonth }: Props) {
     const week = [];
     const start = new Date(currentWeekStart);
     // 日曜日を基準にセット 今日の日付の添字から曜日の添字を引くことで、その週初めの日付を返し続けるようにする
-    // console.log(start.getDay()); console.log(start.getDate());
+		// console.log("今日の日付",start.getDate());
+    // console.log("今日の曜日",start.getDay());
     start.setDate(start.getDate() - start.getDay());
     for (let i = 0; i < TOTAL_DAYS; i++) {
       // 一度Date型を持つ別の変数に格納せず、仮にstartをsetDateし続け、startをpushした場合
