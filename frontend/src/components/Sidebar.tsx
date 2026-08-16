@@ -1,11 +1,13 @@
 import { Home, Users, Folder, Settings, LogOut } from 'lucide-react';
-// import path from 'path';
 import { Link, useLocation } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 const Sidebar = () => {
   const location = useLocation();
   // パス判定用
   const isActive = (path: string) => location.pathname === path;
+	const { handleLogout } = useAuth();
+
   return (
     <>
       {/* ================================================================
@@ -42,7 +44,7 @@ const Sidebar = () => {
         <div className="mt-auto">
           <button className={`w-12 h-12 rounded-lg hover:bg-[#2A1D17] hover:scale-110 transition-colors flex items-center justify-center text-[#D5BA7A] hover:text-white cursor-pointer shadow-inner
             `}>
-            <LogOut size={24} />
+            <LogOut size={24} onClick={handleLogout}/>
           </button>
         </div>
       </div>
@@ -69,11 +71,11 @@ const Sidebar = () => {
           </button>
 
           {/* 中央に強調表示するボタン（例えば新規作成など）があればここに配置できますが、今回はフラットに並べます */}
-          <button className="p-2 text-slate-300 hover:text-white active:scale-95 transition-transform flex flex-col items-center">
+          {/* <button className="p-2 text-slate-300 hover:text-white active:scale-95 transition-transform flex flex-col items-center">
             <div className="text-[#D5BA7A] p-2 rounded-lg">
               <Folder size={24} />
             </div>
-          </button>
+          </button> */}
 
           <Link to="/settings" className={`p-2 active:scale-95 transition-transform flex flex-col items-center 
             ${isActive('/settings') ? 'text-[#2A1D17] -translate-y' : 'text-[#D5BA7A] active:scale-95'}`}>
@@ -81,6 +83,11 @@ const Sidebar = () => {
               <Settings size={24} />
             </div>
           </Link>
+
+					<button className={`w-12 h-12 rounded-lg hover:bg-[#2A1D17] hover:scale-110 transition-colors flex items-center justify-center text-[#D5BA7A] hover:text-white cursor-pointer shadow-inner
+						`}>
+						<LogOut size={24} onClick={handleLogout}/>
+					</button>
 
         </div >
       </div >

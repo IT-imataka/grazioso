@@ -8,7 +8,6 @@ import CalendarView from "../components/CalendarView";
 import ReservationList from "../components/ReservationList";
 import ReservationModal from "../components/ReservationModal";
 
-
 export default function Dashboard() {
 
   const {
