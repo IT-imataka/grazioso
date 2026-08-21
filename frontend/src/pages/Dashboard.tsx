@@ -2,6 +2,7 @@
 
 // import { useState } from "react";
 import useReservations from "../hooks/useReservations";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 // 統合されたコンポーネントのみをインポート
 import Sidebar from "../components/Sidebar";
 import CalendarView from "../components/CalendarView";
@@ -9,6 +10,8 @@ import ReservationList from "../components/ReservationList";
 import ReservationModal from "../components/ReservationModal";
 
 export default function Dashboard() {
+
+	useDocumentTitle("グラツィオーソ | ダッシュボード");
 
   const {
     reservables,
