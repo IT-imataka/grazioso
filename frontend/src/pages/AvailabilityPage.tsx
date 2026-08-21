@@ -3,9 +3,13 @@
 // import CalendarView from "../components/CalendarView";
 import AvailabilityTable from "../components/AvailabilityTable";
 import useReservations from "../hooks/useReservations";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 
 export default function AvailabilityPage () {
+
+	useDocumentTitle("グラツィオーソ");
+	
 	const {
 		currentMonth,
     setCurrentMonth,
