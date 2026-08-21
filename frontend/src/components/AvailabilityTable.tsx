@@ -1,5 +1,6 @@
 import React from "react";
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { SiLine, SiInstagram } from 'react-icons/si';
 import useCalendar from "../hooks/useCalendar";
 import useCustomerAvailability from "../hooks/useCustomerAvailability";
 
@@ -141,7 +142,17 @@ export default function AvailabilityTable({ currentMonth, setCurrentMonth }: Pro
 
       {/* 下部の【ご案内】ボックス */}
       <div className="mt-8 bg-[#3D2C22]/80 border border-[#E5C79E]/30 rounded-xl py-5 px-3 w-full max-w-xl text-sm text-white/90 shadow-lg">
-        <p className="font-bold mb-1">【ご案内】</p>
+        <div className="flex justify-between items-center">
+					<p className="font-bold mb-1">【ご案内】</p>
+					<div className="flex justify-between items-center text-3xl gap-6 ml-auto">
+						<a href="https://lin.ee/x5OWzC5" target="_brank">
+							<SiLine/>
+						</a>
+						<a href="https://www.instagram.com/grazioso115?igsi=MXVyYjllemdrenhqaA%3D%3D" target="_blank">
+							<SiInstagram/>
+						</a>
+					</div>
+				</div>
         <p className="leading-relaxed text-xs sm:text-sm">
           <span className="sm:hidden">ご予約・ご相談は、<br/>お電話または公式LINEにて直接承ります。</span>
           <span className="hidden sm:inline">ご予約・ご相談は、お電話または公式LINEにて直接承ります。</span>
