@@ -27,7 +27,7 @@ export default function AvailabilityTable({ currentMonth, setCurrentMonth }: Pro
 
 
   // 縦軸の時間（10時〜17時）
-  const hours = [10, 11, 12, 13, 14, 15, 16, 17];
+  const hours = [10, 11, 12, 13, 14, 15, 16, 17, 18];
 
   // 空き状況判定
   const getAvailabilityMark = (hour: number, dayIndex: number) => {
