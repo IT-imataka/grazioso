@@ -6,7 +6,7 @@
 
 ### [grazioso-wheat.vercel.app](https://grazioso-wheat.vercel.app/)
 👆 実際のプロダクトはこちらです<br>
-　 運用は来週以降からを予定しています
+　 8/24から運用を開始しました
 
 ---
 
