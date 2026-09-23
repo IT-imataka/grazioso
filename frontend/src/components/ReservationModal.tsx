@@ -152,31 +152,37 @@ const ReservationModal = ({
               onClick={(e) => e.currentTarget.showPicker()}
               className="w-full px-4 py-2 rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer"
             /> */}
-						<div className='flex gap-4'>
-							<select name="" id="" 
-							value={startDatePart}
-							onChange={handleStartDateChange}
-							className="w-full appearance-none px-4 py-3 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
-								<option value="">日付を選択</option>
-								{genDateoptions().map((date) => (
-									<option key={date.value} value={date.value}>
-										{date.label}
-									</option>
-									))
-								}
-							</select>
-							<select name="" id=""
-							value={startTimePart} 
-							onChange={handleStartTimeChange}
-							className="w-full appearance-none px-4 py-3 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
-								<option value="">時刻を選択</option>
-								{genTimeoptions().map((time) => (
-									<option key={time.value} value={time.value}>
-										{time.label}
-									</option>
-									))
-								}
-							</select>
+						<div className='flex gap-4 w-full'>
+							<div className='relative flex-1'>
+								<span className="absolute right-3 top-2 text-[#2A1D17]">&#9660;</span>
+								<select name="" id=""
+								value={startDatePart}
+								onChange={handleStartDateChange}
+								className="w-full appearance-none px-4 py-2 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
+									<option value="">日付を選択&nbsp;</option>
+									{genDateoptions().map((date) => (
+										<option key={date.value} value={date.value}>
+											{date.label}
+										</option>
+										))
+									}
+								</select>
+							</div>
+							<div className='relative flex-1'>
+								<span className="absolute right-3 top-2 text-[#2A1D17]">&#9660;</span>
+								<select name="" id=""
+								value={startTimePart}
+								onChange={handleStartTimeChange}
+								className="w-full appearance-none px-4 py-2 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
+									<option value="">時刻を選択&nbsp;</option>
+									{genTimeoptions().map((time) => (
+										<option key={time.value} value={time.value}>
+											{time.label}
+										</option>
+										))
+									}
+								</select>
+							</div>
 						</div>
           </div>
         </div>
@@ -191,32 +197,38 @@ const ReservationModal = ({
             onClick={(e) => e.currentTarget.showPicker()}
             className="w-full px-4 py-2 rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer"
           /> */}
-					<div className='flex gap-4'>
-							<select name="" id="" 
-							value={endDatePart}
-							onChange={handleEndDateChange}
-							className="w-full appearance-none px-4 py-3 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
-								<option value="">日付を選択</option>
-								{genDateoptions().map((date) => (
-									<option key={date.value} value={date.value}>
-										{date.label}
-									</option>
-									))
-								}
-							</select>
-							<select name="" id="" 
-							value={endTimePart} 
-							onChange={handleEndTimeChange}
-							className="w-full appearance-none px-4 py-3 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
-								<option value="">時刻を選択</option>
-								{genTimeoptions().map((time) => (
-									<option key={time.value} value={time.value}>
-										{time.label}
-									</option>
-									))
-								}
-							</select>
-						</div>
+					<div className='flex gap-4 w-full'>
+							<div className='relative flex-1'>
+								<span className="absolute right-3 top-2 text-[#2A1D17]">&#9660;</span>
+								<select name="" id=""
+								value={endDatePart}
+								onChange={handleEndDateChange}
+								className="w-full appearance-none px-4 py-2 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
+								<option value="">日付を選択&nbsp;</option>
+									{genDateoptions().map((date) => (
+										<option key={date.value} value={date.value}>
+											{date.label}
+										</option>
+										))
+									}
+								</select>
+							</div>
+							<div className='relative flex-1'>
+								<span className="absolute right-3 top-2 text-[#2A1D17]">&#9660;</span>
+								<select name="" id=""
+								value={endTimePart}
+								onChange={handleEndTimeChange}
+								className="w-full appearance-none px-4 py-2 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
+									<option value="">時刻を選択&nbsp;</option>
+									{genTimeoptions().map((time) => (
+										<option key={time.value} value={time.value}>
+											{time.label}
+										</option>
+										))
+									}
+								</select>
+							</div>
+					</div>
         </div>
 
         <div className='mb-6'>
