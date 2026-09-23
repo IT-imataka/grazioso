@@ -156,8 +156,8 @@ const ReservationModal = ({
 							<select name="" id="" 
 							value={startDatePart}
 							onChange={handleStartDateChange}
-							className="w-full px-4 py-2 rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
-								<option value="">日付を選択してください</option>
+							className="w-full px-4 py-2 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
+								<option value="">日付を選択</option>
 								{genDateoptions().map((date) => (
 									<option key={date.value} value={date.value}>
 										{date.label}
@@ -168,8 +168,8 @@ const ReservationModal = ({
 							<select name="" id=""
 							value={startTimePart} 
 							onChange={handleStartTimeChange}
-							className="w-full px-4 py-2 rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
-								<option value="">時刻を選択してください</option>
+							className="w-full px-4 py-2 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
+								<option value="">時刻を選択</option>
 								{genTimeoptions().map((time) => (
 									<option key={time.value} value={time.value}>
 										{time.label}
@@ -195,8 +195,8 @@ const ReservationModal = ({
 							<select name="" id="" 
 							value={endDatePart}
 							onChange={handleEndDateChange}
-							className="w-full px-4 py-2 rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
-								<option value="">日付を選択してください</option>
+							className="w-full px-4 py-2 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
+								<option value="">日付を選択</option>
 								{genDateoptions().map((date) => (
 									<option key={date.value} value={date.value}>
 										{date.label}
@@ -207,8 +207,8 @@ const ReservationModal = ({
 							<select name="" id="" 
 							value={endTimePart} 
 							onChange={handleEndTimeChange}
-							className="w-full px-4 py-2 rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
-								<option value="">時刻を選択してください</option>
+							className="w-full px-4 py-2 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
+								<option value="">時刻を選択</option>
 								{genTimeoptions().map((time) => (
 									<option key={time.value} value={time.value}>
 										{time.label}
