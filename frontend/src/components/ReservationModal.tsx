@@ -6,6 +6,8 @@ import { X } from 'lucide-react';
 // import useReservations from '../hooks/useReservations';
 import type { Reservable } from '../api/reservationApi';
 import { RESERVATION_STATUS_MAP } from '../api/reservationApi';
+import { useState } from 'react';
+
 
 type ReservationModalMode = "create" | "edit";
 
@@ -40,6 +42,84 @@ const ReservationModal = ({
     ? Object.entries(RESERVATION_STATUS_MAP).filter(([statusKey]) => statusKey === "pending")
     : Object.entries(RESERVATION_STATUS_MAP);
 
+	// 日付用と時間用のステートをモーダル内に用意
+	const [startDatePart, setStartDatePart] = useState(() => startTime ? startTime.split(' ')[0] : "");
+	const [startTimePart, setStartTimePart] = useState(() => startTime ? startTime.split(' ')[1] : ""); 
+	const [endDatePart, setEndDatePart] = useState(() => endTime ? endTime.split(' ')[0] : "");
+	const [endTimePart, setEndTimePart] = useState(() => endTime ? endTime.split(' ')[1] : ""); 
+	const weekNum = 7;
+	const allTimes = 16;
+
+	// 開始時間
+	// 日付のプルダウンが変えられたとき
+	const handleStartDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const newDate = e.target.value;
+		setStartDatePart(newDate);
+		// 親の setstartTime を呼んで合体させた値を教える
+		setstartTime(`${newDate} ${startTimePart}`);
+	};
+	// 時間のプルダウンが変えられたとき
+	const handleStartTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const newTime = e.target.value;
+		setStartTimePart(newTime);
+		// 親の setstartTime を呼んで合体させた値を教える
+		setstartTime(`${startDatePart} ${newTime}`);
+	};
+	
+	// 終了時間
+	// 日付のプルダウンが変えられたとき
+	const handleEndDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const newDate = e.target.value;
+		setEndDatePart(newDate);
+		// 親の setendTime を呼んで合体させた値を教える
+		setendTime(`${newDate} ${endTimePart}`);
+	};
+	// 時間のプルダウンが変えられたとき
+	const handleEndTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const newTime = e.target.value;
+		setEndTimePart(newTime);
+		// 親の setendTime を呼んで合体させた値を教える
+		setendTime(`${endDatePart} ${newTime}`);
+	};
+
+	const genDateoptions = () => {
+		const options  = [];
+		const today = new Date();
+
+		for (let i = 0; i < weekNum; i++) { 
+			const d = new Date(today);
+			d.setDate(today.getDate() + i);
+
+			const year = d.getFullYear();
+			const month = String(d.getMonth() + 1).padStart(2, "0");
+			const date = String(d.getDate() + 1).padStart(2, "0");
+			const allString = `${year}-${month}-${date}`;
+
+			const displayDate = `${year}/${month}/${date}`;
+
+			options.push({value : allString, label : displayDate});
+		}
+		return options;
+	}
+	
+	const genTimeoptions = () => {
+		const options  = [];
+		const today = new Date();
+
+		for (let i = 0; i < allTimes; i++) { 
+			const d = new Date(today);
+			d.setHours(10, i * 30, 0, 0);
+
+			const hour = String(d.getHours()).padStart(2, "0");
+			const minutes = String(d.getMinutes()).padStart(2, "0");
+			const timeStr = `${hour}:${minutes}`
+			const displayTime = `${hour}:${minutes}`;
+
+			options.push({value : timeStr, label : displayTime});
+		}
+		return options;
+	}
+
   // 開いていないときはnullで早期リターン
   if (!isOpen) return null;
   return (
@@ -65,26 +145,78 @@ const ReservationModal = ({
         <div className="space-y-6 relative z-10">
           <div className="mb-4">
             <label className="block text-xs font-medium text-slate-600 uppercase mb-2 mb-1">開始時間</label>
-            <input
+            {/* <input
               type="datetime-local"
               value={startTime}
               onChange={(e) => setstartTime(e.target.value)}
               onClick={(e) => e.currentTarget.showPicker()}
               className="w-full px-4 py-2 rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer"
-            />
+            /> */}
+						<div className='flex gap-4'>
+							<select name="" id="" 
+							value={startDatePart}
+							onChange={handleStartDateChange}
+							className="w-full px-4 py-2 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
+								<option value="">日付を選択</option>
+								{genDateoptions().map((date) => (
+									<option key={date.value} value={date.value}>
+										{date.label}
+									</option>
+									))
+								}
+							</select>
+							<select name="" id=""
+							value={startTimePart} 
+							onChange={handleStartTimeChange}
+							className="w-full px-4 py-2 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
+								<option value="">時刻を選択</option>
+								{genTimeoptions().map((time) => (
+									<option key={time.value} value={time.value}>
+										{time.label}
+									</option>
+									))
+								}
+							</select>
+						</div>
           </div>
         </div>
 
         {/* 終了時間 */}
         <div className="mb-6">
           <label className="block text-xs font-medium text-slate-600 uppercase mb-2 mb-1">終了時間</label>
-          <input
+          {/* <input
             type="datetime-local"
             value={endTime}
             onChange={(e) => setendTime(e.target.value)}
             onClick={(e) => e.currentTarget.showPicker()}
             className="w-full px-4 py-2 rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer"
-          />
+          /> */}
+					<div className='flex gap-4'>
+							<select name="" id="" 
+							value={endDatePart}
+							onChange={handleEndDateChange}
+							className="w-full px-4 py-2 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
+								<option value="">日付を選択</option>
+								{genDateoptions().map((date) => (
+									<option key={date.value} value={date.value}>
+										{date.label}
+									</option>
+									))
+								}
+							</select>
+							<select name="" id="" 
+							value={endTimePart} 
+							onChange={handleEndTimeChange}
+							className="w-full px-4 py-2 text-sm rounded-xl bg-white/50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#2A1D17]/50 focus:border-[#2A1D17] text-slate-700 font-medium transition-all cursor-pointer">
+								<option value="">時刻を選択</option>
+								{genTimeoptions().map((time) => (
+									<option key={time.value} value={time.value}>
+										{time.label}
+									</option>
+									))
+								}
+							</select>
+						</div>
         </div>
 
         <div className='mb-6'>
