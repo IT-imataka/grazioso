@@ -48,7 +48,7 @@ const ReservationModal = ({
 	const [endDatePart, setEndDatePart] = useState(() => endTime ? endTime.split(' ')[0] : "");
 	const [endTimePart, setEndTimePart] = useState(() => endTime ? endTime.split(' ')[1] : ""); 
 	const weekNum = 7;
-	const allTimes = 16;
+	const allTimes = 19;
 
 	// 開始時間
 	// 日付のプルダウンが変えられたとき
@@ -85,14 +85,14 @@ const ReservationModal = ({
 	const genDateoptions = () => {
 		const options  = [];
 		const today = new Date();
+		today.setHours(0,0,0,0);
 
 		for (let i = 0; i < weekNum; i++) { 
-			const d = new Date(today);
-			d.setDate(today.getDate() + i);
+			const d = new Date(today.getTime() + i * 24 * 60 * 60 * 1000);
 
 			const year = d.getFullYear();
 			const month = String(d.getMonth() + 1).padStart(2, "0");
-			const date = String(d.getDate() + 1).padStart(2, "0");
+			const date = String(d.getDate()).padStart(2, "0");
 			const allString = `${year}-${month}-${date}`;
 
 			const displayDate = `${year}/${month}/${date}`;
