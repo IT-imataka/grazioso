@@ -99,13 +99,15 @@ export default function Dashboard() {
                     setactiveDate(date);
 
                     const start = new Date(date);
-                    start.setHours(9, 0, 0);
+                    // モーダルの時刻プルダウン(10:00〜19:00)に存在する時刻を初期値にする
+                    start.setHours(10, 0, 0, 0);
                     const end = new Date(date);
-                    end.setHours(10, 0, 0);
+                    end.setHours(11, 0, 0, 0);
 
+                    // モーダルと同じ "YYYY-MM-DD HH:mm" 形式（半角スペース区切り）で渡す
                     const format = (fdate: Date) => {
                       const pad = (n: number) => n.toString().padStart(2, "0");
-                      return `${fdate.getFullYear()}-${pad(fdate.getMonth() + 1)}-${pad(fdate.getDate())}T${pad(fdate.getHours())}:${pad(fdate.getMinutes())}`;
+                      return `${fdate.getFullYear()}-${pad(fdate.getMonth() + 1)}-${pad(fdate.getDate())} ${pad(fdate.getHours())}:${pad(fdate.getMinutes())}`;
                     }
                     setstartTime(format(start));
                     setendTime(format(end));

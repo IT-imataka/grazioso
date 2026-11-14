@@ -5,6 +5,14 @@ import { useEffect, useState } from "react";
 import { type Reservable, type Reservation } from "../api/reservationApi";
 import * as reservationAPI from "../api/reservationApi";
 
+// "YYYY-MM-DD HH:mm" をDateに変換する。不正な値ならnull
+// ※スペース区切りの文字列は new Date() の解釈がブラウザ依存(Safariで Invalid Date になる)ため "T" 区切りにしてから変換する
+const parseLocalDateTime = (value: string): Date | null => {
+  if (!/^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}/.test(value.trim())) return null;
+  const d = new Date(value.trim().replace(" ", "T"));
+  return isNaN(d.getTime()) ? null : d;
+};
+
 export default function useReservations() {
   const [reservables, setReservables] = useState<Reservable[]>([]);
   const [reservations, setReservations] = useState<Reservation[]>([]);
@@ -93,13 +101,19 @@ export default function useReservations() {
       window.alert("終了時刻は開始時刻よりも前を設定してください");
       return;
     }
+    const start = parseLocalDateTime(startTime);
+    const end = parseLocalDateTime(endTime);
+    if (!start || !end) {
+      window.alert("開始・終了の日付と時刻をすべて選択してください");
+      return;
+    }
     try {
       // 処理だけさせる
       // const data = await reservationAPI.handleReserve(reserveId, startTime, endTime);
       await reservationAPI.handleReserve(
         reserveId,
-        new Date(startTime).toISOString(),
-        new Date(endTime).toISOString(),
+        start.toISOString(),
+        end.toISOString(),
         'pending',
       );
 
