@@ -6,7 +6,23 @@ import { X } from 'lucide-react';
 // import useReservations from '../hooks/useReservations';
 import type { Reservable } from '../api/reservationApi';
 import { RESERVATION_STATUS_MAP } from '../api/reservationApi';
-import { useState } from 'react';
+
+// "YYYY-MM-DD HH:mm" / "YYYY-MM-DDTHH:mm" / ISO文字列(Z付き) のどれでも [日付, 時刻] に分解する
+const splitDateTime = (value: string): [string, string] => {
+  if (!value) return ["", ""];
+  // タイムゾーン付き（DBから来た予約など）はローカル時刻に直してから分解
+  if (/Z$|[+-]\d{2}:?\d{2}$/.test(value)) {
+    const d = new Date(value);
+    if (isNaN(d.getTime())) return ["", ""];
+    const pad = (n: number) => String(n).padStart(2, "0");
+    return [
+      `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`,
+      `${pad(d.getHours())}:${pad(d.getMinutes())}`,
+    ];
+  }
+  const [date = "", time = ""] = value.trim().split(/[ T]/);
+  return [date, time.slice(0, 5)];
+};
 
 
 type ReservationModalMode = "create" | "edit";
@@ -42,11 +58,10 @@ const ReservationModal = ({
     ? Object.entries(RESERVATION_STATUS_MAP).filter(([statusKey]) => statusKey === "pending")
     : Object.entries(RESERVATION_STATUS_MAP);
 
-	// 日付用と時間用のステートをモーダル内に用意
-	const [startDatePart, setStartDatePart] = useState(() => startTime ? startTime.split(' ')[0] : "");
-	const [startTimePart, setStartTimePart] = useState(() => startTime ? startTime.split(' ')[1] : ""); 
-	const [endDatePart, setEndDatePart] = useState(() => endTime ? endTime.split(' ')[0] : "");
-	const [endTimePart, setEndTimePart] = useState(() => endTime ? endTime.split(' ')[1] : ""); 
+	// 日付部分と時刻部分は親から渡された startTime / endTime から毎回計算する
+	// （useStateの初期値にすると、モーダルが最初にマウントされた時の値＝空文字のまま固定されてしまうため）
+	const [startDatePart, startTimePart] = splitDateTime(startTime);
+	const [endDatePart, endTimePart] = splitDateTime(endTime);
 	const weekNum = 7;
 	const allTimes = 19;
 
@@ -54,14 +69,12 @@ const ReservationModal = ({
 	// 日付のプルダウンが変えられたとき
 	const handleStartDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const newDate = e.target.value;
-		setStartDatePart(newDate);
 		// 親の setstartTime を呼んで合体させた値を教える
 		setstartTime(`${newDate} ${startTimePart}`);
 	};
 	// 時間のプルダウンが変えられたとき
 	const handleStartTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const newTime = e.target.value;
-		setStartTimePart(newTime);
 		// 親の setstartTime を呼んで合体させた値を教える
 		setstartTime(`${startDatePart} ${newTime}`);
 	};
@@ -70,14 +83,12 @@ const ReservationModal = ({
 	// 日付のプルダウンが変えられたとき
 	const handleEndDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const newDate = e.target.value;
-		setEndDatePart(newDate);
 		// 親の setendTime を呼んで合体させた値を教える
 		setendTime(`${newDate} ${endTimePart}`);
 	};
 	// 時間のプルダウンが変えられたとき
 	const handleEndTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const newTime = e.target.value;
-		setEndTimePart(newTime);
 		// 親の setendTime を呼んで合体させた値を教える
 		setendTime(`${endDatePart} ${newTime}`);
 	};
