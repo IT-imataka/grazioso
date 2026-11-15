@@ -56,6 +56,17 @@ export class ReservationController {
     }
   };
 
+  // 公開用：空き状況（時間帯のみ）
+  getAvailability = async (req: Request, res: Response) => {
+    try {
+      const slots = await reservationService.getAvailability();
+      res.status(200).json(slots);
+    } catch (error) {
+      console.error("空き状況の取得エラー", error);
+      res.status(500).json({ message: "予期せぬエラー" });
+    }
+  };
+
   // 削除したい予約の内容だけを削除する関数
   cancel = async (req: Request, res: Response) => {
     const id = req.params.id;

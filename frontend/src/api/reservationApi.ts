@@ -1,4 +1,5 @@
 // State と APIを分けるのがコツ
+import { authHeaders } from "./authHeaders";
 
 const API_BASE_PORT = 3000;
 const API_env_URL =
@@ -33,7 +34,9 @@ export type Reservation = {
 // 何を予約するのかを取得する関数
 export const fetchReservables = async (): Promise<Reservable[]> => {
   console.log("データ取得中...");
-  const res = await fetch(`${API_env_URL}/reservables`);
+  const res = await fetch(`${API_env_URL}/reservables`, {
+    headers: await authHeaders(),
+  });
 
   // try-catchは削除し、ここでエラーを返すように
   if (!res.ok) throw new Error("データ取得失敗");
@@ -46,7 +49,9 @@ export const fetchReservables = async (): Promise<Reservable[]> => {
 
 // 予約データ取得関数は、予約した時点以外にも画面を開いたタイミングでも出てくるように
 export const fetchReservations = async (): Promise<Reservation[]> => {
-  const res = await fetch(`${API_env_URL}/reservations`);
+  const res = await fetch(`${API_env_URL}/reservations`, {
+    headers: await authHeaders(),
+  });
 
   if (!res.ok) throw new Error("予約データ取得失敗");
 
@@ -58,9 +63,12 @@ export const fetchReservations = async (): Promise<Reservation[]> => {
 
 // 空き状況確認用API関数
 // 型明示することで必ずtry-catchを担保する
-export const fetchRevCustomer = async (): Promise<Reservation[]> => {
+// 公開APIのため、顧客情報は含まれず時間帯だけが返ってくる
+export type AvailabilitySlot = Pick<Reservation, "startTime" | "endTime">;
+
+export const fetchRevCustomer = async (): Promise<AvailabilitySlot[]> => {
 	try {
-		const res = await fetch(`${API_env_URL}/reservations`,{
+		const res = await fetch(`${API_env_URL}/availability`,{
 			method: "GET",
 			headers: {
 				"Content-type":"application/json"
@@ -92,6 +100,7 @@ export const handleReserve = async (
       // 品名
       headers: {
         "Content-type": "application/json",
+        ...(await authHeaders()),
       },
       // 中身
       body: JSON.stringify({
@@ -126,6 +135,7 @@ export const handleCancel = async (reservationId: number) => {
   // methodの更新だけだが,App.tsxに返すため変数に入れる
   const res = await fetch(`${API_env_URL}/reservations/${reservationId}`, {
     method: "DELETE",
+    headers: await authHeaders(),
   });
   if (!res.ok) throw new Error("キャンセルできませんでした");
   return true;
@@ -141,7 +151,7 @@ export const handleUpdate = async (
 ) => {
   const res = await fetch(`${API_env_URL}/reservations/${id}`, {
     method: "PUT",
-    headers: { "Content-type": "application/json" },
+    headers: { "Content-type": "application/json", ...(await authHeaders()) },
     body: JSON.stringify({
       startTime: startTime,
       endTime: endTime,

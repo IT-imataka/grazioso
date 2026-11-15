@@ -90,6 +90,12 @@ export class ReservationService {
     return await reservationRepository.findAll();
   }
 
+  // 公開用の空き状況。誰でも叩けるAPIなので、顧客ID・ステータスなどは返さず時間帯だけにする
+  async getAvailability(): Promise<Pick<Reservation, "startTime" | "endTime">[]> {
+    const all = await reservationRepository.findAll();
+    return all.map(({ startTime, endTime }) => ({ startTime, endTime }));
+  }
+
   // MVCSのためデータの保存場所を触るために一度ビジネスロジックを経由する
   // そのあとはRepoにつなげる
   async cancelReservation(id: string): Promise<boolean> {

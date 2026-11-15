@@ -1,5 +1,6 @@
 // import { fetchReservables } from "./reservationApi";
 import type { Reservable } from "./reservationApi";
+import { authHeaders } from "./authHeaders";
 
 // ポートは同じ場所を使う、エンドポイントを分ける
 const API_BASE_PORT = 3000;
@@ -8,7 +9,9 @@ const API_BASE_URL =
 
 // 取得処理
 export const fetchgReservables = async (): Promise<Reservable[]> => {
-  const res = await fetch(`${API_BASE_URL}/reservables`);
+  const res = await fetch(`${API_BASE_URL}/reservables`, {
+    headers: await authHeaders(),
+  });
   // okプロパティで存在確認
   if (!res.ok) throw new Error("データが取得できませんでした");
   // 値だけを返す値だけを返す値だけを返す値だけを返す値だけを返す値だけを返す値だけを返す値だけを返す
@@ -27,6 +30,7 @@ export const regReservables = async (
     // 何で渡すか
     headers: {
       "content-type": "application/json",
+      ...(await authHeaders()),
     },
     // どうやって、それを何で渡すか
     body: JSON.stringify({
@@ -44,6 +48,7 @@ export const deleteReservable = async (id: number) => {
   // method更新
   const res = await fetch(`${API_BASE_URL}/reservables/${id}`, {
     method: "DELETE",
+    headers: await authHeaders(),
   });
   if (!res.ok) throw new Error("削除に失敗しました");
   // 204 No Content の場合はボディが空のため json() を呼ばない
@@ -62,6 +67,7 @@ export const updateReservable = async (
     method: "PUT",
     headers: {
       "Content-type": "application/json",
+      ...(await authHeaders()),
     },
     body: JSON.stringify({
       name: name,

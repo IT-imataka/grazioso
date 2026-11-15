@@ -2,10 +2,10 @@
 
 import { useEffect,useState } from "react";
 import { fetchRevCustomer } from "../api/reservationApi";
-import { type Reservation } from "../api/reservationApi";
+import { type AvailabilitySlot } from "../api/reservationApi";
 
 export default function useCustomerAvailability (currentWeekStart: Date) {
-	const [availability,setAvailability] = useState<Reservation[]>([]);
+	const [availability,setAvailability] = useState<AvailabilitySlot[]>([]);
 
 	// 空き状況表示
 	useEffect (() => {
