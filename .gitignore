@@ -138,3 +138,6 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# 保留中のパッチ・作業メモ（ローカルのみ）
+.pending-patches/
