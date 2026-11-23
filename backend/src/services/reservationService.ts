@@ -78,7 +78,7 @@ export class ReservationService {
       status: data.status
     };
     // リポジトリに保存
-    reservationRepository.create(newreservation);
+    await reservationRepository.create(newreservation);
 
     // 作成したデータを返す
     return newreservation;
