@@ -81,10 +81,12 @@ const ReservationList = ({ activeDate, currentMonth, reservations, reservable, o
           />
         ))}
       </div>
-
-      <div className="mt-4 pt-6 border-t border-gray-200 text-center text-sm text-gray-500 shrink-0">
-        Selected Date: {activeDate?.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
-      </div>
+			
+			{activeDate &&
+				<div className="mt-4 pt-6 border-t border-gray-200 text-center text-sm text-gray-500 shrink-0">
+					Selected Date: {activeDate?.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
+				</div>
+			}
     </div>
   )
 };

@@ -45,7 +45,6 @@ const ReservableList = ({ reservables, onDelete, onEdit, onAddClick }: Props) =>
           />))}
       </div>
 
-      {/* Footer Info: v0にあるフッター装飾を追加（ロジックには影響しません） */}
     </div>
   )
 };
