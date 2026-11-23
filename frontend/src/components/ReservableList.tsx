@@ -45,10 +45,6 @@ const ReservableList = ({ reservables, onDelete, onEdit, onAddClick }: Props) =>
           />))}
       </div>
 
-      {/* Footer Info: v0にあるフッター装飾を追加（ロジックには影響しません） */}
-      <div className="mt-4 pt-6 border-t border-gray-200 text-center text-sm text-gray-500 shrink-0">
-        Selected Date: {new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}
-      </div>
     </div>
   )
 };
